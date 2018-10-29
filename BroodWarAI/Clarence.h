@@ -3,8 +3,7 @@
 
 // Remember not to use "Broodwar" in any global class constructor!
 
-class Clarence : public BWAPI::AIModule
-{
+class Clarence : public BWAPI::AIModule {
 public:
 	// Virtual functions for callbacks, leave these as they are.
 	virtual void onStart();

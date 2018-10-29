@@ -10,8 +10,7 @@ using namespace Filter;
 
 namespace { auto &theMap = BWEM::Map::Instance(); }
 
-void Clarence::onStart()
-{
+void Clarence::onStart() {
 	try {
 		// Hello World!
 		Broodwar->sendText("Hello world!");
@@ -31,23 +30,20 @@ void Clarence::onStart()
 		Broodwar->setCommandOptimizationLevel(2);
 
 		// Check if this is a replay
-		if (Broodwar->isReplay())
-		{
+		if (Broodwar->isReplay()) {
 
 			// Announce the players in the replay
 			Broodwar << "The following players are in this replay:" << std::endl;
 
 			// Iterate all the players in the game using a std:: iterator
 			Playerset players = Broodwar->getPlayers();
-			for (auto p : players)
-			{
+			for (auto p : players) {
 				// Only print the player if they are not an observer
 				if (!p->isObserver())
 					Broodwar << p->getName() << ", playing as " << p->getRace() << std::endl;
 			}
 
-		}
-		else // if this is not a replay
+		} else // if this is not a replay
 		{
 			// Retrieve you and your enemy's races. enemy() will just return the first enemy.
 			// If you wish to deal with multiple enemies then you must use enemies().
@@ -67,28 +63,23 @@ void Clarence::onStart()
 
 			Broodwar << "glhf" << std::endl;
 		}
-	}
-	catch (const std::exception &e) {
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onEnd(bool isWinner)
-{
+void Clarence::onEnd(bool isWinner) {
 	// Called when the game ends
 	try {
-		if (isWinner)
-		{
+		if (isWinner) {
 			// Log your win here!
 		}
-	}
-	catch (const std::exception &e) {
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onFrame()
-{
+void Clarence::onFrame() {
 	// Called once every game frame
 	try {
 		BWEM::utils::gridMapExample(theMap);
@@ -108,8 +99,7 @@ void Clarence::onFrame()
 			return;
 
 		// Iterate through all the units that we own
-		for (auto &u : Broodwar->self()->getUnits())
-		{
+		for (auto &u : Broodwar->self()->getUnits()) {
 			// Ignore the unit if it no longer exists
 			// Make sure to include this block when handling any Unit pointer!
 			if (!u->exists())
@@ -132,22 +122,17 @@ void Clarence::onFrame()
 
 
 			// If the unit is a worker unit
-			if (u->getType().isWorker())
-			{
+			if (u->getType().isWorker()) {
 				// if our worker is idle
-				if (u->isIdle())
-				{
+				if (u->isIdle()) {
 					// Order workers carrying a resource to return them to the center,
 					// otherwise find a mineral patch to harvest.
-					if (u->isCarryingGas() || u->isCarryingMinerals())
-					{
+					if (u->isCarryingGas() || u->isCarryingMinerals()) {
 						u->returnCargo();
-					}
-					else if (!u->getPowerUp())  // The worker cannot harvest anything if it
+					} else if (!u->getPowerUp())  // The worker cannot harvest anything if it
 					{                             // is carrying a powerup such as a flag
 												  // Harvest from the nearest mineral patch or gas refinery
-						if (!u->gather(u->getClosestUnit(IsMineralField || IsRefinery)))
-						{
+						if (!u->gather(u->getClosestUnit(IsMineralField || IsRefinery))) {
 							// If the call fails, then print the last error message
 							Broodwar << Broodwar->getLastError() << std::endl;
 						}
@@ -155,13 +140,11 @@ void Clarence::onFrame()
 					} // closure: has no powerup
 				} // closure: if idle
 
-			}
-			else if (u->getType().isResourceDepot()) // A resource depot is a Command Center, Nexus, or Hatchery
+			} else if (u->getType().isResourceDepot()) // A resource depot is a Command Center, Nexus, or Hatchery
 			{
 
 				// Order the depot to construct more workers! But only when it is idle.
-				if (u->isIdle() && !u->train(u->getType().getRace().getWorker()))
-				{
+				if (u->isIdle() && !u->train(u->getType().getRace().getWorker())) {
 					// If that fails, draw the error at the location so that you can visibly see what went wrong!
 					// However, drawing the error once will only appear for a single frame
 					// so create an event that keeps it on the screen for some frames
@@ -178,8 +161,7 @@ void Clarence::onFrame()
 					// If we are supply blocked and haven't tried constructing more recently
 					if (lastErr == Errors::Insufficient_Supply &&
 						lastChecked + 400 < Broodwar->getFrameCount() &&
-						Broodwar->self()->incompleteUnitCount(supplyProviderType) == 0)
-					{
+						Broodwar->self()->incompleteUnitCount(supplyProviderType) == 0) {
 						lastChecked = Broodwar->getFrameCount();
 
 						// Retrieve a unit that is capable of constructing the supply needed
@@ -187,16 +169,12 @@ void Clarence::onFrame()
 							(IsIdle || IsGatheringMinerals) &&
 							IsOwned);
 						// If a unit was found
-						if (supplyBuilder)
-						{
-							if (supplyProviderType.isBuilding())
-							{
+						if (supplyBuilder) {
+							if (supplyProviderType.isBuilding()) {
 								TilePosition targetBuildLocation = Broodwar->getBuildLocation(supplyProviderType, supplyBuilder->getTilePosition());
-								if (targetBuildLocation)
-								{
+								if (targetBuildLocation) {
 									// Register an event that draws the target build location
-									Broodwar->registerEvent([targetBuildLocation, supplyProviderType](Game*)
-									{
+									Broodwar->registerEvent([targetBuildLocation, supplyProviderType](Game*) {
 										Broodwar->drawBoxMap(Position(targetBuildLocation),
 											Position(targetBuildLocation + supplyProviderType.tileSize()),
 											Colors::Blue);
@@ -207,9 +185,7 @@ void Clarence::onFrame()
 																				// Order the builder to construct the supply structure
 									supplyBuilder->build(supplyProviderType, targetBuildLocation);
 								}
-							}
-							else
-							{
+							} else {
 								// Train the supply provider (Overlord) if the provider is not a structure
 								supplyBuilder->train(supplyProviderType);
 							}
@@ -220,14 +196,12 @@ void Clarence::onFrame()
 			}
 
 		} // closure: unit iterator
-	}
-	catch (const std::exception &e) {
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onSendText(std::string text)
-{
+void Clarence::onSendText(std::string text) {
 	try {
 		BWEM::utils::MapDrawer::ProcessCommand(text);
 
@@ -237,138 +211,104 @@ void Clarence::onSendText(std::string text)
 
 		// Make sure to use %s and pass the text as a parameter,
 		// otherwise you may run into problems when you use the %(percent) character!
-	}
-	catch (const std::exception &e) {
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onReceiveText(BWAPI::Player player, std::string text)
-{
+void Clarence::onReceiveText(BWAPI::Player player, std::string text) {
 	try {
 		// Parse the received text
 		Broodwar << player->getName() << " said \"" << text << "\"" << std::endl;
-	}
-	catch (const std::exception &e) {
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onPlayerLeft(BWAPI::Player player)
-{
+void Clarence::onPlayerLeft(BWAPI::Player player) {
 	try {
 		// Interact verbally with the other players in the game by
 		// announcing that the other player has left.
 		Broodwar->sendText("Goodbye %s!", player->getName().c_str());
-	}
-	catch (const std::exception &e) {
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onNukeDetect(BWAPI::Position target)
-{
+void Clarence::onNukeDetect(BWAPI::Position target) {
 	try {
 		// Check if the target is a valid position
-		if (target)
-		{
+		if (target) {
 			// if so, print the location of the nuclear strike target
 			Broodwar << "Nuclear Launch Detected at " << target << std::endl;
-		}
-		else
-		{
+		} else {
 			// Otherwise, ask other players where the nuke is!
 			Broodwar->sendText("Where's the nuke?");
 		}
 
 		// You can also retrieve all the nuclear missile targets using Broodwar->getNukeDots()!
-	}
-	catch (const std::exception &e) {
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onUnitDiscover(BWAPI::Unit unit)
-{
-}
+void Clarence::onUnitDiscover(BWAPI::Unit unit) {}
 
-void Clarence::onUnitEvade(BWAPI::Unit unit)
-{
-}
+void Clarence::onUnitEvade(BWAPI::Unit unit) {}
 
-void Clarence::onUnitShow(BWAPI::Unit unit)
-{
-}
+void Clarence::onUnitShow(BWAPI::Unit unit) {}
 
-void Clarence::onUnitHide(BWAPI::Unit unit)
-{
-}
+void Clarence::onUnitHide(BWAPI::Unit unit) {}
 
-void Clarence::onUnitCreate(BWAPI::Unit unit)
-{
+void Clarence::onUnitCreate(BWAPI::Unit unit) {
 	try {
-		if (Broodwar->isReplay())
-		{
+		if (Broodwar->isReplay()) {
 			// if we are in a replay, then we will print out the build order of the structures
-			if (unit->getType().isBuilding() && !unit->getPlayer()->isNeutral())
-			{
+			if (unit->getType().isBuilding() && !unit->getPlayer()->isNeutral()) {
 				int seconds = Broodwar->getFrameCount() / 24;
 				int minutes = seconds / 60;
 				seconds %= 60;
 				Broodwar->sendText("%.2d:%.2d: %s creates a %s", minutes, seconds, unit->getPlayer()->getName().c_str(), unit->getType().c_str());
 			}
 		}
-	}
-	catch (const std::exception &e) {
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onUnitDestroy(BWAPI::Unit unit)
-{
+void Clarence::onUnitDestroy(BWAPI::Unit unit) {
 	try {
 		if (unit->getType().isMineralField()) theMap.OnMineralDestroyed(unit);
 		else if (unit->getType().isSpecialBuilding()) theMap.OnStaticBuildingDestroyed(unit);
-	}
-	catch (const std::exception &e){
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onUnitMorph(BWAPI::Unit unit)
-{
+void Clarence::onUnitMorph(BWAPI::Unit unit) {
 	try {
-		if (Broodwar->isReplay())
-		{
+		if (Broodwar->isReplay()) {
 			// if we are in a replay, then we will print out the build order of the structures
-			if (unit->getType().isBuilding() && !unit->getPlayer()->isNeutral())
-			{
+			if (unit->getType().isBuilding() && !unit->getPlayer()->isNeutral()) {
 				int seconds = Broodwar->getFrameCount() / 24;
 				int minutes = seconds / 60;
 				seconds %= 60;
 				Broodwar->sendText("%.2d:%.2d: %s morphs a %s", minutes, seconds, unit->getPlayer()->getName().c_str(), unit->getType().c_str());
 			}
 		}
-	}
-	catch (const std::exception &e) {
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onUnitRenegade(BWAPI::Unit unit)
-{
-}
+void Clarence::onUnitRenegade(BWAPI::Unit unit) {}
 
-void Clarence::onSaveGame(std::string gameName)
-{
+void Clarence::onSaveGame(std::string gameName) {
 	try {
 		Broodwar << "The game was saved to \"" << gameName << "\"" << std::endl;
-	}
-	catch (const std::exception &e) {
+	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
 }
 
-void Clarence::onUnitComplete(BWAPI::Unit unit)
-{
-}
+void Clarence::onUnitComplete(BWAPI::Unit unit) {}
