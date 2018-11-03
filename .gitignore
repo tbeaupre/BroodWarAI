@@ -1,3 +1,7 @@
 /Release/*
 /.vs/*
 /BroodWarAI/Release/*
+/BroodWarAI/bwapi/*
+/BroodWarAI/debug/*
+/BroodWarAI/Release_Binary/*
+/BroodWarAI/x64/Debug/*
