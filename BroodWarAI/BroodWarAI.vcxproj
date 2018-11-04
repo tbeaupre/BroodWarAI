@@ -166,6 +166,7 @@
   <ItemGroup>
     <ClCompile Include="BuildAction.cpp" />
     <ClCompile Include="BuildCondition.cpp" />
+    <ClCompile Include="BuildManager.cpp" />
     <ClCompile Include="BuildOrders.cpp" />
     <ClCompile Include="BuildOrderStep.cpp" />
     <ClCompile Include="BWEM 1.4.1\EasyBMP_1.06\EasyBMP.cpp" />

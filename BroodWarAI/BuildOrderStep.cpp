@@ -1,21 +1,20 @@
 #include "BuildOrderStep.h"
 
-BuildOrderStep::BuildOrderStep(BuildAction * newAction, int newRepeat) {
-	condition = new BuildCondition();
-	action = newAction;
-	repeat = newRepeat;
+BuildOrderStep::BuildOrderStep(BuildAction *action, int repeat) {
+	condition_ = new BuildCondition();
+	action_ = action;
+	repeat_ = repeat;
 }
 
-BuildOrderStep::BuildOrderStep(BuildCondition *newCondition, BuildAction *newAction, int newRepeat) {
-	condition = newCondition;
-	action = newAction;
-	repeat = newRepeat;
+BuildOrderStep::BuildOrderStep(BuildCondition *condition, BuildAction *action, int repeat) {
+	condition_ = condition;
+	action_ = action;
+	repeat_ = repeat;
 }
 
-const BuildCondition *BuildOrderStep::getCondition() {
-	return condition;
-}
-
-const BuildAction *BuildOrderStep::getAction() {
-	return action;
+void BuildOrderStep::setComplete() {
+	--repeat_;
+	if (repeat_ == 0) {
+		isComplete_ = true;
+	}
 }

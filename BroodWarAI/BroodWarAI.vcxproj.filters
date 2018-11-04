@@ -96,6 +96,9 @@
     <ClCompile Include="BuildOrders.cpp">
       <Filter>Source Files\BuildOrders</Filter>
     </ClCompile>
+    <ClCompile Include="BuildManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clarence.h">

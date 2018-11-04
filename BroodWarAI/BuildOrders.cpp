@@ -1,8 +1,8 @@
 #include "BWAPI.h"
 #include "BuildOrders.h"
 
-std::vector<BuildOrderStep*> BuildOrders::getOverPool() {
-	std::vector<BuildOrderStep*> result = {
+BuildOrder BuildOrders::GetOverPool() {
+	BuildOrder result = {
 		new BuildOrderStep(
 			new BuildAction(&BWAPI::UnitTypes::Zerg_Drone),
 			5),

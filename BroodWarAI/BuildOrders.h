@@ -3,8 +3,7 @@
 
 typedef std::vector<BuildOrderStep*> BuildOrder;
 
-static class BuildOrders {
+class BuildOrders {
 public:
-	std::vector<BuildOrderStep*> getOverPool();
-
+	static BuildOrder GetOverPool();
 };

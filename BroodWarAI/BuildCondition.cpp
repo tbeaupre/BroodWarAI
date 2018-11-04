@@ -1,80 +1,80 @@
 #include "BuildCondition.h"
 
 BuildCondition::BuildCondition() {
-	type = BuildConditionType::None;
+	type_ = ConditionType::NONE;
 }
 
-BuildCondition::BuildCondition(BuildConditionResource newResourceType, int resourceValue) {
-	type = BuildConditionType::Resource;
-	resourceType = newResourceType;
-	value = resourceValue;
+BuildCondition::BuildCondition(ResourceType resourceType, int value) {
+	type_ = ConditionType::RESOURCE;
+	resourceType_ = resourceType;
+	value_ = value;
 }
 
-BuildCondition::BuildCondition(const BWAPI::UnitType *newUnitType, int unitValue) {
-	type = BuildConditionType::Unit;
-	unitType = newUnitType;
-	value = unitValue;
+BuildCondition::BuildCondition(const BWAPI::UnitType *unitType, int value) {
+	type_ = ConditionType::UNIT;
+	unitType_ = unitType;
+	value_ = value;
 }
 
-BuildCondition::BuildCondition(const BWAPI::TechType *newTechType) {
-	type = BuildConditionType::Tech;
-	techType = newTechType;
+BuildCondition::BuildCondition(const BWAPI::TechType *techType) {
+	type_ = ConditionType::TECH;
+	techType_ = techType;
 }
 
-BuildCondition::BuildCondition(const BWAPI::UpgradeType *newUpgradeType, int upgradeValue) {
-	type = BuildConditionType::Upgrade;
-	upgradeType = newUpgradeType;
-	value = upgradeValue;
+BuildCondition::BuildCondition(const BWAPI::UpgradeType *upgradeType, int value) {
+	type_ = ConditionType::UPGRADE;
+	upgradeType_ = upgradeType;
+	value_ = value;
 }
 
-bool BuildCondition::isConditionMet() {
-	switch (type) {
-		case BuildConditionType::None:
+bool BuildCondition::IsConditionMet() const {
+	switch (type_) {
+		case ConditionType::NONE:
 			return true;
-		case BuildConditionType::Resource:
-			return isResourceConditionMet();
-		case BuildConditionType::Unit:
-			return isUnitConditionMet();
-		case BuildConditionType::Tech:
-			return isTechConditionMet();
-		case BuildConditionType::Upgrade:
-			return isUpgradeConditionMet();
+		case ConditionType::RESOURCE:
+			return IsResourceConditionMet();
+		case ConditionType::UNIT:
+			return IsUnitConditionMet();
+		case ConditionType::TECH:
+			return IsTechConditionMet();
+		case ConditionType::UPGRADE:
+			return IsUpgradeConditionMet();
 		default:
 			return true;
 	}
 }
 
-bool BuildCondition::isResourceConditionMet() {
-	switch (resourceType) {
-		case BuildConditionResource::Supply:
-			return BWAPI::Broodwar->self()->supplyUsed() == value;
-		case BuildConditionResource::Mineral:
-			return BWAPI::Broodwar->self()->minerals() >= value;
-		case BuildConditionResource::Gas:
-			return BWAPI::Broodwar->self()->gas() >= value;
+bool BuildCondition::IsResourceConditionMet() const {
+	switch (resourceType_) {
+		case ResourceType::SUPPLY:
+			return BWAPI::Broodwar->self()->supplyUsed() == value_;
+		case ResourceType::MINERAL:
+			return BWAPI::Broodwar->self()->minerals() >= value_;
+		case ResourceType::GAS:
+			return BWAPI::Broodwar->self()->gas() >= value_;
 		default:
 			return true;
 	}
 }
 
-bool BuildCondition::isUnitConditionMet() {
+bool BuildCondition::IsUnitConditionMet() const {
 	BWAPI::Unitset units = BWAPI::Broodwar->self()->getUnits();
 	int count = 0;
 	for (auto u = units.begin(); u != units.end(); ++u) {
 		BWAPI::Unit unit = *u;
 		if (unit->exists() &&
-			unit->isCompleted &&
-			unit->getType() == *unitType) {
+			unit->isCompleted() &&
+			unit->getType() == *unitType_) {
 			++count;
 		}
 	}
-	return count >= value;
+	return count >= value_;
 }
 
-bool BuildCondition::isTechConditionMet() {
-	return BWAPI::Broodwar->self()->hasResearched(*techType);
+bool BuildCondition::IsTechConditionMet() const {
+	return BWAPI::Broodwar->self()->hasResearched(*techType_);
 }
 
-bool BuildCondition::isUpgradeConditionMet() {
-	return BWAPI::Broodwar->self()->getUpgradeLevel(*upgradeType) == value;
+bool BuildCondition::IsUpgradeConditionMet() const {
+	return BWAPI::Broodwar->self()->getUpgradeLevel(*upgradeType_) == value_;
 }

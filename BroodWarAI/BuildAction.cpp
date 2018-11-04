@@ -1,48 +1,32 @@
 #include "BuildAction.h"
 
-BuildAction::BuildAction(const BWAPI::UnitType *newUnit) {
-	type = BuildActionType::Unit;
-	unitType = newUnit;
+BuildAction::BuildAction(const BWAPI::UnitType *unitType) {
+	type_ = ActionType::UNIT;
+	unitType_ = unitType;
 }
 
-BuildAction::BuildAction(const BWAPI::TechType *newTech) {
-	type = BuildActionType::Tech;
-	techType = newTech;
+BuildAction::BuildAction(const BWAPI::TechType *techType) {
+	type_ = ActionType::TECH;
+	techType_ = techType;
 }
 
-BuildAction::BuildAction(const BWAPI::UpgradeType *newUpgrade) {
-	type = BuildActionType::Upgrade;
-	upgradeType = newUpgrade;
+BuildAction::BuildAction(const BWAPI::UpgradeType *upgradeType) {
+	type_ = ActionType::UPGRADE;
+	upgradeType_ = upgradeType;
 }
 
-const BuildActionType BuildAction::getType() {
-	return type;
+bool BuildAction::isUnit() const {
+	return type_ == ActionType::UNIT;
 }
 
-const BWAPI::UnitType *BuildAction::getUnitType() {
-	return unitType;
+bool BuildAction::isBuilding() const {
+	return type_ == ActionType::UNIT && unitType_->isBuilding();
 }
 
-const BWAPI::TechType *BuildAction::getTechType() {
-	return techType;
+bool BuildAction::isTech() const {
+	return type_ == ActionType::TECH;
 }
 
-const BWAPI::UpgradeType *BuildAction::getUpgradeType() {
-	return upgradeType;
-}
-
-bool BuildAction::isUnit() {
-	return type == BuildActionType::Unit;
-}
-
-bool BuildAction::isBuilding() {
-	return type == BuildActionType::Unit && unitType->isBuilding();
-}
-
-bool BuildAction::isTech() {
-	return type == BuildActionType::Tech;
-}
-
-bool BuildAction::isUpgrade() {
-	return type == BuildActionType::Upgrade;
+bool BuildAction::isUpgrade() const {
+	return type_ == ActionType::UPGRADE;
 }

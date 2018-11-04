@@ -1,31 +1,35 @@
 #pragma once
 #include "BWAPI.h"
 
-enum BuildActionType {
-	Unit,
-	Upgrade,
-	Tech,
-};
+namespace BuildActionEnums {
+	enum ActionType {
+		UNIT,
+		UPGRADE,
+		TECH,
+	};
+}
+
+using namespace BuildActionEnums;
 
 class BuildAction {
 public:
-	BuildAction(const BWAPI::UnitType *newUnit);
-	BuildAction(const BWAPI::TechType *newTech);
-	BuildAction(const BWAPI::UpgradeType *newUpgrade);
+	BuildAction(const BWAPI::UnitType *unitType);
+	BuildAction(const BWAPI::TechType *techType);
+	BuildAction(const BWAPI::UpgradeType *upgradeType);
 
-	const BuildActionType getType();
-	const BWAPI::UnitType *getUnitType();
-	const BWAPI::TechType *getTechType();
-	const BWAPI::UpgradeType *getUpgradeType();
+	ActionType getType() const { return type_; }
+	const BWAPI::UnitType *getUnitType() const { return unitType_; }
+	const BWAPI::TechType *getTechType() const { return techType_; }
+	const BWAPI::UpgradeType *getUpgradeType() const { return upgradeType_; }
 
-	bool isUnit();
-	bool isBuilding();
-	bool isTech();
-	bool isUpgrade();
+	bool isUnit() const;
+	bool isBuilding() const;
+	bool isTech() const;
+	bool isUpgrade() const;
 
 private:
-	BuildActionType type;
-	const BWAPI::UnitType *unitType;
-	const BWAPI::TechType *techType;
-	const BWAPI::UpgradeType *upgradeType;
+	ActionType type_;
+	const BWAPI::UnitType *unitType_;
+	const BWAPI::TechType *techType_;
+	const BWAPI::UpgradeType *upgradeType_;
 };
