@@ -16,6 +16,12 @@
     <Filter Include="BWEM">
       <UniqueIdentifier>{a4cf1dbb-1a5d-41f9-abed-9328a650ebf6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\BuildOrders">
+      <UniqueIdentifier>{3e1b9fbe-5159-4f95-b84d-ecd55b2a2fb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BuildOrders">
+      <UniqueIdentifier>{24ad483c-ced5-45bd-afb0-9ac3820a9f55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dll.cpp">
@@ -78,6 +84,18 @@
     <ClCompile Include="BWEM 1.4.1\EasyBMP_1.06\EasyBMP.cpp">
       <Filter>BWEM</Filter>
     </ClCompile>
+    <ClCompile Include="BuildAction.cpp">
+      <Filter>Source Files\BuildOrders</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildCondition.cpp">
+      <Filter>Source Files\BuildOrders</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildOrderStep.cpp">
+      <Filter>Source Files\BuildOrders</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildOrders.cpp">
+      <Filter>Source Files\BuildOrders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clarence.h">
@@ -139,6 +157,21 @@
     </ClInclude>
     <ClInclude Include="BWEM 1.4.1\EasyBMP_1.06\EasyBMP.h">
       <Filter>BWEM</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildAction.h">
+      <Filter>Header Files\BuildOrders</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildCondition.h">
+      <Filter>Header Files\BuildOrders</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildOrderStep.h">
+      <Filter>Header Files\BuildOrders</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildOrders.h">
+      <Filter>Header Files\BuildOrders</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
