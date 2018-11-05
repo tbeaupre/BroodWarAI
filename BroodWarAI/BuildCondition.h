@@ -23,9 +23,9 @@ class BuildCondition {
 public:
 	BuildCondition();
 	BuildCondition(ResourceType newResourceType, int value);
-	BuildCondition(const BWAPI::UnitType *newUnitType, int value);
+	BuildCondition(const BWAPI::UnitType *newUnitType, int value, bool unitCompleted = false);
 	BuildCondition(const BWAPI::TechType *newTechType);
-	BuildCondition(const BWAPI::UpgradeType *newUpgradeType, int value);
+	BuildCondition(const BWAPI::UpgradeType *newUpgradeType, int value = 1);
 
 	bool IsConditionMet() const;
 
@@ -36,6 +36,7 @@ private:
 	const BWAPI::TechType *techType_;
 	const BWAPI::UpgradeType *upgradeType_;
 	int value_;
+	bool unitCompleted_;
 
 	bool IsResourceConditionMet() const;
 	bool IsUnitConditionMet() const;

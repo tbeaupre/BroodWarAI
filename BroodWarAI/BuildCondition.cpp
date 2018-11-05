@@ -10,10 +10,11 @@ BuildCondition::BuildCondition(ResourceType resourceType, int value) {
 	value_ = value;
 }
 
-BuildCondition::BuildCondition(const BWAPI::UnitType *unitType, int value) {
+BuildCondition::BuildCondition(const BWAPI::UnitType *unitType, int value, bool unitCompleted) {
 	type_ = ConditionType::UNIT;
 	unitType_ = unitType;
 	value_ = value;
+	unitCompleted_ = unitCompleted;
 }
 
 BuildCondition::BuildCondition(const BWAPI::TechType *techType) {
@@ -63,11 +64,13 @@ bool BuildCondition::IsUnitConditionMet() const {
 	for (auto u = units.begin(); u != units.end(); ++u) {
 		BWAPI::Unit unit = *u;
 		if (unit->exists() &&
-			unit->isCompleted() &&
 			unit->getType() == *unitType_) {
-			++count;
+			if (unit->isCompleted() || (!unitCompleted_ && unit->isBeingConstructed())) {
+				++count;
+			}
 		}
 	}
+	BWAPI::Broodwar << count << "/" << value_ << " " << unitType_->toString() << std::endl;
 	return count >= value_;
 }
 
