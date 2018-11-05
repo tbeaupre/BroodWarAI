@@ -30,3 +30,20 @@ bool BuildAction::isTech() const {
 bool BuildAction::isUpgrade() const {
 	return type_ == ActionType::UPGRADE;
 }
+
+void BuildAction::PrintAction() const {
+	switch (type_) {
+		case ActionType::UNIT:
+			BWAPI::Broodwar << unitType_->toString() << std::endl;
+			break;
+		case ActionType::TECH:
+			BWAPI::Broodwar << techType_->toString() << std::endl;
+			break;
+		case ActionType::UPGRADE:
+			BWAPI::Broodwar << upgradeType_->toString() << std::endl;
+			break;
+		default:
+			BWAPI::Broodwar << std::endl;
+			break;
+	}
+}

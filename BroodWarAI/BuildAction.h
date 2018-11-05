@@ -26,6 +26,7 @@ public:
 	bool isBuilding() const;
 	bool isTech() const;
 	bool isUpgrade() const;
+	void PrintAction() const;
 
 private:
 	ActionType type_;
