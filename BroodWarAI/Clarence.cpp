@@ -45,6 +45,9 @@ void Clarence::onStart() {
 
 		} else // if this is not a replay
 		{
+			buildManager = new BuildManager();
+			BWAPI::Broodwar->setLocalSpeed(0);
+
 			// Retrieve you and your enemy's races. enemy() will just return the first enemy.
 			// If you wish to deal with multiple enemies then you must use enemies().
 			if (Broodwar->enemy()) // First make sure there is an enemy
@@ -56,10 +59,6 @@ void Clarence::onStart() {
 			theMap.EnableAutomaticPathAnalysis();
 			bool startingLocationsOK = theMap.FindBasesForStartingLocations();
 			assert(startingLocationsOK);
-
-			BWEM::utils::MapPrinter::Initialize(&theMap);
-			BWEM::utils::printMap(theMap);
-			BWEM::utils::pathExample(theMap);
 
 			Broodwar << "glhf" << std::endl;
 		}
@@ -82,7 +81,6 @@ void Clarence::onEnd(bool isWinner) {
 void Clarence::onFrame() {
 	// Called once every game frame
 	try {
-		BWEM::utils::gridMapExample(theMap);
 		BWEM::utils::drawMap(theMap);
 
 		// Display the game frame rate as text in the upper left area of the screen
@@ -97,6 +95,8 @@ void Clarence::onFrame() {
 		// Latency frames are the number of frames before commands are processed.
 		if (Broodwar->getFrameCount() % Broodwar->getLatencyFrames() != 0)
 			return;
+
+		buildManager->OnFrame();
 
 		// Iterate through all the units that we own
 		for (auto &u : Broodwar->self()->getUnits()) {
@@ -117,10 +117,6 @@ void Clarence::onFrame() {
 			if (!u->isCompleted() || u->isConstructing())
 				continue;
 
-
-			// Finally make the unit do some stuff!
-
-
 			// If the unit is a worker unit
 			if (u->getType().isWorker()) {
 				// if our worker is idle
@@ -129,18 +125,15 @@ void Clarence::onFrame() {
 					// otherwise find a mineral patch to harvest.
 					if (u->isCarryingGas() || u->isCarryingMinerals()) {
 						u->returnCargo();
-					} else if (!u->getPowerUp())  // The worker cannot harvest anything if it
-					{                             // is carrying a powerup such as a flag
-												  // Harvest from the nearest mineral patch or gas refinery
+					} else {
 						if (!u->gather(u->getClosestUnit(IsMineralField || IsRefinery))) {
 							// If the call fails, then print the last error message
 							Broodwar << Broodwar->getLastError() << std::endl;
 						}
-
-					} // closure: has no powerup
+					}
 				} // closure: if idle
 
-			} else if (u->getType().isResourceDepot()) // A resource depot is a Command Center, Nexus, or Hatchery
+			} /* else if (u->getType().isResourceDepot()) // A resource depot is a Command Center, Nexus, or Hatchery
 			{
 
 				// Order the depot to construct more workers! But only when it is idle.
@@ -192,9 +185,7 @@ void Clarence::onFrame() {
 						} // closure: supplyBuilder is valid
 					} // closure: insufficient supply
 				} // closure: failed to train idle unit
-
-			}
-
+			}*/
 		} // closure: unit iterator
 	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
