@@ -162,8 +162,8 @@ private:
 	id								m_id;
 	groupId							m_groupId = 0;
 	BWAPI::WalkPosition				m_top;
-	BWAPI::TilePosition				m_topLeft     = {std::numeric_limits<int>::max(), std::numeric_limits<int>::max()};
-	BWAPI::TilePosition				m_bottomRight = {std::numeric_limits<int>::min(), std::numeric_limits<int>::min()};
+	BWAPI::TilePosition				m_topLeft     = {(std::numeric_limits<int>::max)(), (std::numeric_limits<int>::max)()};
+	BWAPI::TilePosition				m_bottomRight = {(std::numeric_limits<int>::min)(), (std::numeric_limits<int>::min)()};
 	altitude_t						m_maxAltitude;
 	int								m_miniTiles;
 	int								m_tiles = 0;
