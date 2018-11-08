@@ -1,5 +1,7 @@
 #include "BuildManager.h"
 
+using namespace BuildActionEnums;
+
 BuildManager::BuildManager() {
 	BuildOrder overPool = BuildOrders::GetOverPool();
 	BuildOrder h3SpireH5Hydra = BuildOrders::Get3BaseSpire5HatchHydra();

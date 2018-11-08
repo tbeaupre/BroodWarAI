@@ -1,5 +1,7 @@
 #include "BuildAction.h"
 
+using namespace BuildActionEnums;
+
 BuildAction::BuildAction(const BWAPI::UnitType *unitType) {
 	type_ = ActionType::UNIT;
 	unitType_ = unitType;

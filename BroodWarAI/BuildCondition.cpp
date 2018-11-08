@@ -1,5 +1,7 @@
 #include "BuildCondition.h"
 
+using namespace BuildConditionEnums;
+
 BuildCondition::BuildCondition() {
 	type_ = ConditionType::NONE;
 }

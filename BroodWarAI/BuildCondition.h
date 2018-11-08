@@ -17,12 +17,10 @@ namespace BuildConditionEnums {
 	};
 };
 
-using namespace BuildConditionEnums;
-
 class BuildCondition {
 public:
 	BuildCondition();
-	BuildCondition(ResourceType newResourceType, int value);
+	BuildCondition(BuildConditionEnums::ResourceType newResourceType, int value);
 	BuildCondition(const BWAPI::UnitType *newUnitType, int value, bool unitCompleted = false);
 	BuildCondition(const BWAPI::TechType *newTechType);
 	BuildCondition(const BWAPI::UpgradeType *newUpgradeType, int value = 1);
@@ -30,8 +28,8 @@ public:
 	bool IsConditionMet() const;
 
 private:
-	ConditionType type_;
-	ResourceType resourceType_;
+	BuildConditionEnums::ConditionType type_;
+	BuildConditionEnums::ResourceType resourceType_;
 	const BWAPI::UnitType *unitType_;
 	const BWAPI::TechType *techType_;
 	const BWAPI::UpgradeType *upgradeType_;

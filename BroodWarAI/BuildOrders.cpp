@@ -1,6 +1,8 @@
 #include "BWAPI.h"
 #include "BuildOrders.h"
 
+using namespace BuildConditionEnums;
+
 BuildOrder BuildOrders::GetOverPool() {
 	return BuildOrder({
 		new BuildOrderStep(
