@@ -30,7 +30,6 @@ void BuildManager::OnFrame() {
 }
 
 void BuildManager::HandleAction() {
-	currentAction_->PrintAction();
 	switch (currentAction_->getType()) {
 		case ActionType::UNIT:
 			if (currentAction_->isBuilding()) {
@@ -77,7 +76,6 @@ void BuildManager::HandleBuildingAction() {
 			}
 		}
 		if (toBuild == BWAPI::UnitTypes::Zerg_Lair || toBuild == BWAPI::UnitTypes::Zerg_Hive) {
-			BWAPI::Broodwar << "BUILDING A LAIR/HIVE" << std::endl;
 			if (builder->build(toBuild)) {
 				CompleteAction(); // TODO: This should not be considered completion.
 			}
