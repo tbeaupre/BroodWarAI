@@ -17,22 +17,6 @@ BuildAction::BuildAction(const BWAPI::UpgradeType *upgradeType) {
 	upgradeType_ = upgradeType;
 }
 
-bool BuildAction::isUnit() const {
-	return type_ == ActionType::UNIT;
-}
-
-bool BuildAction::isBuilding() const {
-	return type_ == ActionType::UNIT && unitType_->isBuilding();
-}
-
-bool BuildAction::isTech() const {
-	return type_ == ActionType::TECH;
-}
-
-bool BuildAction::isUpgrade() const {
-	return type_ == ActionType::UPGRADE;
-}
-
 void BuildAction::PrintAction() const {
 	switch (type_) {
 		case ActionType::UNIT:

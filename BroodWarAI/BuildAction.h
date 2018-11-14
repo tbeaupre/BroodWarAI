@@ -20,10 +20,11 @@ public:
 	const BWAPI::TechType *getTechType() const { return techType_; }
 	const BWAPI::UpgradeType *getUpgradeType() const { return upgradeType_; }
 
-	bool isUnit() const;
-	bool isBuilding() const;
-	bool isTech() const;
-	bool isUpgrade() const;
+	bool isUnit() const { return type_ == ActionType::UNIT; }
+	bool isBuilding() const { return type_ == ActionType::UNIT && unitType_->isBuilding(); }
+	bool isTech() const { return type_ == ActionType::TECH; }
+	bool isUpgrade() const { return type_ == ActionType::UPGRADE; }
+
 	void PrintAction() const;
 
 private:
