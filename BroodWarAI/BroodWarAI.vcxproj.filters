@@ -99,6 +99,9 @@
     <ClCompile Include="BuildManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UnitManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clarence.h">
@@ -174,6 +177,9 @@
       <Filter>Header Files\BuildOrders</Filter>
     </ClInclude>
     <ClInclude Include="BuildManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
