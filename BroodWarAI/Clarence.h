@@ -1,6 +1,7 @@
 #pragma once
 #include <BWAPI.h>
 #include "BuildManager.h"
+#include "BaseManager.h"
 
 // Remember not to use "Broodwar" in any global class constructor!
 
@@ -27,6 +28,7 @@ public:
 	// Everything below this line is safe to modify.
 
 private:
-	BuildManager *buildManager;
+	BuildManager *buildManager_;
+	BaseManager *baseManager_;
 
 };

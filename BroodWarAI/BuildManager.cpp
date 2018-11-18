@@ -117,13 +117,9 @@ void BuildManager::HandleUpgradeAction() {
 }
 
 void BuildManager::CompleteAction() {
-	BWAPI::Broodwar << "Action Completed ";
-	currentAction_->PrintAction();
-
 	BuildOrderStep *step = build_[currentStep_];
 	step->setComplete();
 	if (step->isComplete()) {
-		BWAPI::Broodwar << "Moving to Next Build Step" << std::endl;
 		currentAction_ = nullptr;
 		++currentStep_;
 	}

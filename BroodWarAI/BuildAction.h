@@ -6,6 +6,11 @@ namespace BuildActionEnums {
 		UNIT,
 		UPGRADE,
 		TECH,
+		OTHER,
+	};
+
+	enum OtherActionType {
+		EXPAND,
 	};
 }
 
@@ -19,11 +24,13 @@ public:
 	const BWAPI::UnitType *getUnitType() const { return unitType_; }
 	const BWAPI::TechType *getTechType() const { return techType_; }
 	const BWAPI::UpgradeType *getUpgradeType() const { return upgradeType_; }
+	BuildActionEnums::OtherActionType getOtherType() const { return otherType_; }
 
-	bool isUnit() const { return type_ == ActionType::UNIT; }
-	bool isBuilding() const { return type_ == ActionType::UNIT && unitType_->isBuilding(); }
-	bool isTech() const { return type_ == ActionType::TECH; }
-	bool isUpgrade() const { return type_ == ActionType::UPGRADE; }
+	bool isUnit() const { return type_ == BuildActionEnums::ActionType::UNIT; }
+	bool isBuilding() const { return type_ == BuildActionEnums::ActionType::UNIT && unitType_->isBuilding(); }
+	bool isTech() const { return type_ == BuildActionEnums::ActionType::TECH; }
+	bool isUpgrade() const { return type_ == BuildActionEnums::ActionType::UPGRADE; }
+	bool isOther() const { return type_ == BuildActionEnums::ActionType::OTHER; }
 
 	void PrintAction() const;
 
@@ -32,4 +39,5 @@ private:
 	const BWAPI::UnitType *unitType_;
 	const BWAPI::TechType *techType_;
 	const BWAPI::UpgradeType *upgradeType_;
+	BuildActionEnums::OtherActionType otherType_;
 };

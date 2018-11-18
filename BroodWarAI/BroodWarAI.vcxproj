@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseManager.h" />
     <ClInclude Include="BuildAction.h" />
     <ClInclude Include="BuildManager.h" />
     <ClInclude Include="BuildOrders.h" />
@@ -162,8 +163,11 @@
     <ClInclude Include="BWEM 1.4.1\src\winutils.h" />
     <ClInclude Include="Clarence.h" />
     <ClInclude Include="BuildCondition.h" />
+    <ClInclude Include="Nolsy.h" />
+    <ClInclude Include="UnitManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseManager.cpp" />
     <ClCompile Include="BuildAction.cpp" />
     <ClCompile Include="BuildCondition.cpp" />
     <ClCompile Include="BuildManager.cpp" />
@@ -189,6 +193,8 @@
     <ClCompile Include="BWEM 1.4.1\src\winutils.cpp" />
     <ClCompile Include="Dll.cpp" />
     <ClCompile Include="Clarence.cpp" />
+    <ClCompile Include="Nolsy.cpp" />
+    <ClCompile Include="UnitManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

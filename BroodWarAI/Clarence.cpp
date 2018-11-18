@@ -1,6 +1,6 @@
 #include "Clarence.h"
-#include "BWEM 1.4.1\src\bwem.h"
 #include <iostream>
+#include "UnitManager.h"
 
 using namespace BWAPI;
 using namespace Filter;
@@ -45,7 +45,8 @@ void Clarence::onStart() {
 
 		} else // if this is not a replay
 		{
-			buildManager = new BuildManager();
+			UnitManager::Init();
+			buildManager_ = new BuildManager();
 			BWAPI::Broodwar->setLocalSpeed(0);
 
 			// Retrieve you and your enemy's races. enemy() will just return the first enemy.
@@ -59,6 +60,7 @@ void Clarence::onStart() {
 			theMap.EnableAutomaticPathAnalysis();
 			bool startingLocationsOK = theMap.FindBasesForStartingLocations();
 			assert(startingLocationsOK);
+			baseManager_ = new BaseManager(Broodwar->self()->getStartLocation());
 
 			Broodwar << "glhf" << std::endl;
 		}
@@ -96,7 +98,7 @@ void Clarence::onFrame() {
 		if (Broodwar->getFrameCount() % Broodwar->getLatencyFrames() != 0)
 			return;
 
-		buildManager->OnFrame();
+		buildManager_->OnFrame();
 
 		// Iterate through all the units that we own
 		for (auto &u : Broodwar->self()->getUnits()) {
@@ -271,6 +273,7 @@ void Clarence::onUnitDestroy(BWAPI::Unit unit) {
 	try {
 		if (unit->getType().isMineralField()) theMap.OnMineralDestroyed(unit);
 		else if (unit->getType().isSpecialBuilding()) theMap.OnStaticBuildingDestroyed(unit);
+		UnitManager::DestroyUnit(unit);
 	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
@@ -302,4 +305,6 @@ void Clarence::onSaveGame(std::string gameName) {
 	}
 }
 
-void Clarence::onUnitComplete(BWAPI::Unit unit) {}
+void Clarence::onUnitComplete(BWAPI::Unit unit) {
+	UnitManager::CompleteUnit(unit);
+}
