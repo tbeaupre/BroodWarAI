@@ -6,6 +6,11 @@ class Nolsy {
 public:
 	Nolsy(const BuildAction *action);
 	void Update();
+
+	void Create();
+	void Complete();
+	void Destroy();
+
 	void SoftCancel();
 	void Resume();
 	void HardCancel();
@@ -13,13 +18,15 @@ public:
 private:
 	enum Status {
 		PAUSED,
+		UNSTARTED,
 		STOPPABLE,
 		CANCELLABLE
 	};
 
 	Status status_ = STOPPABLE;
 	const BuildAction *action_;
-	BWAPI::Unit target_;
+	BWAPI::Unit unit_;
+	BWAPI::TilePosition *targetLocation_;
 
 	void Cancel();
 	void Suicide(); // End it all.

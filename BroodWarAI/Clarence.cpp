@@ -264,6 +264,7 @@ void Clarence::onUnitCreate(BWAPI::Unit unit) {
 				Broodwar->sendText("%.2d:%.2d: %s creates a %s", minutes, seconds, unit->getPlayer()->getName().c_str(), unit->getType().c_str());
 			}
 		}
+		UnitManager::CreateUnit(unit);
 	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
