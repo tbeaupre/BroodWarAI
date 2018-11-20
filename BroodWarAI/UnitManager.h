@@ -14,6 +14,9 @@ public:
 	static BWAPI::Unit ReserveStructure(BWAPI::UnitType structureType);
 	static void ReturnStructure(BWAPI::Unit structure);
 
+	static BWAPI::Unit ReserveUnit(BWAPI::UnitType unitType);
+	static void ReturnUnit(BWAPI::Unit unit);
+
 	static void RegisterForUnitCreate(Nolsy *nolsy, BWAPI::UnitType unitType);
 	static void RegisterForUnitComplete(Nolsy *nolsy, BWAPI::UnitType unitType);
 	static void RegisterForUnitDestroy(Nolsy *nolsy, BWAPI::UnitType unitType);

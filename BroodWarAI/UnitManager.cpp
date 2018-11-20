@@ -51,6 +51,18 @@ void UnitManager::ReturnStructure(BWAPI::Unit structure) {
 	structures_->insert(structure);
 }
 
+BWAPI::Unit UnitManager::ReserveUnit(BWAPI::UnitType unitType) {
+	if (units_->empty()) return nullptr;
+
+	Unit toReturn = units_->getClosestUnit(Filter::GetType == unitType);
+	units_->erase(toReturn);
+	return toReturn;
+}
+
+void UnitManager::ReturnUnit(BWAPI::Unit unit) {
+	units_->insert(unit);
+}
+
 void UnitManager::RegisterForUnitCreate(Nolsy *nolsy, BWAPI::UnitType unitType) {
 	unitCreateRegistry_[unitType].insert(nolsy);
 }
