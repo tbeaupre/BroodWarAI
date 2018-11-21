@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Banker.h" />
+    <ClInclude Include="BankerUtilities.h" />
     <ClInclude Include="BuildAction.h" />
     <ClInclude Include="BuildManager.h" />
     <ClInclude Include="BuildOrders.h" />
@@ -169,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Banker.cpp" />
+    <ClCompile Include="BankerUtilities.cpp" />
     <ClCompile Include="Bill.cpp" />
     <ClCompile Include="BuildAction.cpp" />
     <ClCompile Include="BuildCondition.cpp" />

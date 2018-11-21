@@ -117,6 +117,9 @@
     <ClCompile Include="Bill.cpp">
       <Filter>Source Files\Banker</Filter>
     </ClCompile>
+    <ClCompile Include="BankerUtilities.cpp">
+      <Filter>Source Files\Banker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clarence.h">
@@ -204,6 +207,9 @@
       <Filter>Header Files\Banker</Filter>
     </ClInclude>
     <ClInclude Include="Bill.h">
+      <Filter>Header Files\Banker</Filter>
+    </ClInclude>
+    <ClInclude Include="BankerUtilities.h">
       <Filter>Header Files\Banker</Filter>
     </ClInclude>
   </ItemGroup>
