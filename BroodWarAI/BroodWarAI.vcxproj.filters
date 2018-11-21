@@ -22,6 +22,12 @@
     <Filter Include="Source Files\BuildOrders">
       <UniqueIdentifier>{24ad483c-ced5-45bd-afb0-9ac3820a9f55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Banker">
+      <UniqueIdentifier>{f60317fc-18f3-4b37-a077-096cd00eb0eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Banker">
+      <UniqueIdentifier>{f0f69a3d-8c1b-451c-9f3d-8f2fb43973e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dll.cpp">
@@ -99,6 +105,18 @@
     <ClCompile Include="BuildManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Banker.cpp">
+      <Filter>Source Files\Banker</Filter>
+    </ClCompile>
+    <ClCompile Include="Prioritizer.cpp">
+      <Filter>Source Files\Banker</Filter>
+    </ClCompile>
+    <ClCompile Include="Ticket.cpp">
+      <Filter>Source Files\Banker</Filter>
+    </ClCompile>
+    <ClCompile Include="Bill.cpp">
+      <Filter>Source Files\Banker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clarence.h">
@@ -175,6 +193,18 @@
     </ClInclude>
     <ClInclude Include="BuildManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Banker.h">
+      <Filter>Header Files\Banker</Filter>
+    </ClInclude>
+    <ClInclude Include="Prioritizer.h">
+      <Filter>Header Files\Banker</Filter>
+    </ClInclude>
+    <ClInclude Include="Ticket.h">
+      <Filter>Header Files\Banker</Filter>
+    </ClInclude>
+    <ClInclude Include="Bill.h">
+      <Filter>Header Files\Banker</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

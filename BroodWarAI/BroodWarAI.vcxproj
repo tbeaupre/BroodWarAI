@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Banker.h" />
     <ClInclude Include="BuildAction.h" />
     <ClInclude Include="BuildManager.h" />
     <ClInclude Include="BuildOrders.h" />
@@ -162,8 +163,13 @@
     <ClInclude Include="BWEM 1.4.1\src\winutils.h" />
     <ClInclude Include="Clarence.h" />
     <ClInclude Include="BuildCondition.h" />
+    <ClInclude Include="Bill.h" />
+    <ClInclude Include="Prioritizer.h" />
+    <ClInclude Include="Ticket.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Banker.cpp" />
+    <ClCompile Include="Bill.cpp" />
     <ClCompile Include="BuildAction.cpp" />
     <ClCompile Include="BuildCondition.cpp" />
     <ClCompile Include="BuildManager.cpp" />
@@ -189,6 +195,8 @@
     <ClCompile Include="BWEM 1.4.1\src\winutils.cpp" />
     <ClCompile Include="Dll.cpp" />
     <ClCompile Include="Clarence.cpp" />
+    <ClCompile Include="Prioritizer.cpp" />
+    <ClCompile Include="Ticket.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

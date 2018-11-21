@@ -3,6 +3,6 @@
 static class Prioritizer
 {
 public:
-	void FileRequest(BuildAction action, int priority = 1);
+	void FileRequest(BuildAction *action, int priority = 1);
 };
 
