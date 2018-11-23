@@ -14,6 +14,15 @@ void Nolsy::Update() {
 		case PAUSED:
 			break;
 		case CANCELLABLE:
+			switch (action_->getType()) {
+				case ActionType::TECH:
+				case ActionType::UPGRADE:
+					if (--sleep <= 0) {
+						UnitManager::ReturnStructure(unit_);
+						Suicide();
+					}
+					break;
+			}
 			break;
 		case STOPPABLE:
 			break;
@@ -77,7 +86,7 @@ void Nolsy::Cancel() {
 }
 
 void Nolsy::Suicide() {
-	// Tell the boys back home the job's done.
+	// Alright boys, pack it up.
 }
 
 void Nolsy::HandleAction() {
@@ -102,20 +111,24 @@ void Nolsy::HandleAction() {
 }
 
 void Nolsy::HandleUnitAction(const UnitType *unitType) {
+	Unit source;
 	switch (*unitType) {
+		case UnitTypes::Zerg_Devourer:
+		case UnitTypes::Zerg_Guardian:
 		case UnitTypes::Zerg_Lurker:
-			// This is where you turn a Hydra into a Lurker. I swear I had something for this.
+			Unit source = UnitManager::ReserveUnit(unitType->whatBuilds().first);
 			break;
 		default:
-			Unit larva = UnitManager::GetLarva();
-			if (larva && larva->exists()) {
-				if (larva->morph(*unitType)) {
-					unit_ = larva;
-					UnitManager::RegisterForUnitComplete(this, *unitType);
-					status_ = CANCELLABLE;
-				};
-			}
+			Unit source = UnitManager::GetLarva();
 			break;
+	}
+	if (source && source->exists()) {
+		if (source->morph(*unitType)) {
+			unit_ = source;
+			UnitManager::RegisterForUnitComplete(this, *unitType);
+			UnitManager::RegisterForUnitDestroy(this, *unitType);
+			status_ = CANCELLABLE;
+		};
 	}
 }
 
@@ -168,6 +181,7 @@ void Nolsy::HandleStructureAction(const UnitType *unitType) {
 void Nolsy::HandleTechAction(const TechType *techType) {
 	if (BWAPI::Broodwar->self()->isResearching(*techType)) {
 		Broodwar << "Tech successfully started." << std::endl;
+		sleep = techType->researchTime();
 		status_ = CANCELLABLE;
 		return;
 	}
@@ -184,6 +198,7 @@ void Nolsy::HandleTechAction(const TechType *techType) {
 void Nolsy::HandleUpgradeAction(const UpgradeType *upgradeType) {
 	if (BWAPI::Broodwar->self()->isUpgrading(*upgradeType)) {
 		Broodwar << "Upgrade successfully started." << std::endl;
+		sleep = upgradeType->upgradeTime(Broodwar->self()->getUpgradeLevel(*upgradeType) + 1);
 		status_ = CANCELLABLE;
 		return;
 	}

@@ -24,6 +24,7 @@ private:
 	};
 
 	Status status_ = STOPPABLE;
+	int sleep;
 	const BuildAction *action_;
 	BWAPI::Unit unit_;
 	BWAPI::TilePosition *targetLocation_;
