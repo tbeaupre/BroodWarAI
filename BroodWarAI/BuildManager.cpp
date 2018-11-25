@@ -2,13 +2,16 @@
 
 using namespace BuildActionEnums;
 
-BuildManager::BuildManager() {
+BuildOrder BuildManager::build_;
+int BuildManager::currentStep_ = 0;
+const BuildAction *BuildManager::currentAction_ = nullptr;
+
+void BuildManager::Init() {
 	BuildOrder overPool = BuildOrders::GetOverPool();
 	BuildOrder h3SpireH5Hydra = BuildOrders::Get3BaseSpire5HatchHydra();
 	overPool.insert(overPool.end(), h3SpireH5Hydra.begin(), h3SpireH5Hydra.end());
 
 	build_ = overPool;
-	currentStep_ = 0;
 }
 
 void BuildManager::OnFrame() {

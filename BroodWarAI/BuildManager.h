@@ -3,19 +3,18 @@
 
 class BuildManager {
 public:
-	BuildManager();
-
-	void OnFrame();
+	static void Init();
+	static void OnFrame();
 
 private:
-	BuildOrder build_;
-	int currentStep_;
-	const BuildAction *currentAction_ = nullptr;
+	static BuildOrder build_;
+	static int currentStep_;
+	static const BuildAction *currentAction_;
 
-	void HandleAction();
-	void HandleUnitAction();
-	void HandleBuildingAction();
-	void HandleTechAction();
-	void HandleUpgradeAction();
-	void CompleteAction();
+	static void HandleAction();
+	static void HandleUnitAction();
+	static void HandleBuildingAction();
+	static void HandleTechAction();
+	static void HandleUpgradeAction();
+	static void CompleteAction();
 };
