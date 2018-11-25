@@ -22,6 +22,12 @@
     <Filter Include="Source Files\BuildOrders">
       <UniqueIdentifier>{24ad483c-ced5-45bd-afb0-9ac3820a9f55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Nolsy">
+      <UniqueIdentifier>{9b479f27-ce5f-4374-9297-edf42319872e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Nolsy">
+      <UniqueIdentifier>{7d2e6307-1894-4a56-a2d1-04a3de01bd1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dll.cpp">
@@ -102,11 +108,26 @@
     <ClCompile Include="BaseManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Nolsy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UnitManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NolsyBase.cpp">
+      <Filter>Source Files\Nolsy</Filter>
+    </ClCompile>
+    <ClCompile Include="NolsyUnit.cpp">
+      <Filter>Source Files\Nolsy</Filter>
+    </ClCompile>
+    <ClCompile Include="NolsyStructure.cpp">
+      <Filter>Source Files\Nolsy</Filter>
+    </ClCompile>
+    <ClCompile Include="NolsyTech.cpp">
+      <Filter>Source Files\Nolsy</Filter>
+    </ClCompile>
+    <ClCompile Include="NolsyUpgrade.cpp">
+      <Filter>Source Files\Nolsy</Filter>
+    </ClCompile>
+    <ClCompile Include="NolsyOther.cpp">
+      <Filter>Source Files\Nolsy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,11 +209,26 @@
     <ClInclude Include="BaseManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Nolsy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UnitManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NolsyBase.h">
+      <Filter>Header Files\Nolsy</Filter>
+    </ClInclude>
+    <ClInclude Include="NolsyUnit.h">
+      <Filter>Header Files\Nolsy</Filter>
+    </ClInclude>
+    <ClInclude Include="NolsyStructure.h">
+      <Filter>Header Files\Nolsy</Filter>
+    </ClInclude>
+    <ClInclude Include="NolsyTech.h">
+      <Filter>Header Files\Nolsy</Filter>
+    </ClInclude>
+    <ClInclude Include="NolsyUpgrade.h">
+      <Filter>Header Files\Nolsy</Filter>
+    </ClInclude>
+    <ClInclude Include="NolsyOther.h">
+      <Filter>Header Files\Nolsy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

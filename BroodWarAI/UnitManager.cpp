@@ -7,9 +7,9 @@ BWAPI::Unitset *UnitManager::workers_;
 BWAPI::Unitset *UnitManager::units_;
 BWAPI::Unitset *UnitManager::structures_;
 BWAPI::Unitset *UnitManager::spells_;
-std::map<BWAPI::UnitType, std::unordered_set<Nolsy*>> UnitManager::unitCreateRegistry_;
-std::map<BWAPI::UnitType, std::unordered_set<Nolsy*>> UnitManager::unitCompleteRegistry_;
-std::map<BWAPI::UnitType, std::unordered_set<Nolsy*>> UnitManager::unitDestroyRegistry_;
+std::map<BWAPI::UnitType, std::unordered_set<NolsyBase*>> UnitManager::unitCreateRegistry_;
+std::map<BWAPI::UnitType, std::unordered_set<NolsyBase*>> UnitManager::unitCompleteRegistry_;
+std::map<BWAPI::UnitType, std::unordered_set<NolsyBase*>> UnitManager::unitDestroyRegistry_;
 
 void UnitManager::Init() {
 	larvae_ = new Unitset(Unitset::none);
@@ -63,15 +63,15 @@ void UnitManager::ReturnUnit(BWAPI::Unit unit) {
 	units_->insert(unit);
 }
 
-void UnitManager::RegisterForUnitCreate(Nolsy *nolsy, BWAPI::UnitType unitType) {
+void UnitManager::RegisterForUnitCreate(NolsyBase *nolsy, BWAPI::UnitType unitType) {
 	unitCreateRegistry_[unitType].insert(nolsy);
 }
 
-void UnitManager::RegisterForUnitComplete(Nolsy *nolsy, BWAPI::UnitType unitType) {
+void UnitManager::RegisterForUnitComplete(NolsyBase *nolsy, BWAPI::UnitType unitType) {
 	unitCompleteRegistry_[unitType].insert(nolsy);
 }
 
-void UnitManager::RegisterForUnitDestroy(Nolsy *nolsy, BWAPI::UnitType unitType) {
+void UnitManager::RegisterForUnitDestroy(NolsyBase *nolsy, BWAPI::UnitType unitType) {
 	unitDestroyRegistry_[unitType].insert(nolsy);
 }
 

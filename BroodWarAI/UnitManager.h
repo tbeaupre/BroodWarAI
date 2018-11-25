@@ -1,6 +1,6 @@
 #pragma once
 #include "BWAPI.h"
-#include "Nolsy.h"
+#include "NolsyBase.h"
 
 class UnitManager {
 public:
@@ -17,9 +17,9 @@ public:
 	static BWAPI::Unit ReserveUnit(BWAPI::UnitType unitType);
 	static void ReturnUnit(BWAPI::Unit unit);
 
-	static void RegisterForUnitCreate(Nolsy *nolsy, BWAPI::UnitType unitType);
-	static void RegisterForUnitComplete(Nolsy *nolsy, BWAPI::UnitType unitType);
-	static void RegisterForUnitDestroy(Nolsy *nolsy, BWAPI::UnitType unitType);
+	static void RegisterForUnitCreate(NolsyBase *nolsy, BWAPI::UnitType unitType);
+	static void RegisterForUnitComplete(NolsyBase *nolsy, BWAPI::UnitType unitType);
+	static void RegisterForUnitDestroy(NolsyBase *nolsy, BWAPI::UnitType unitType);
 
 	static void CreateUnit(BWAPI::Unit unit);
 	static void CompleteUnit(BWAPI::Unit unit);
@@ -32,7 +32,7 @@ private:
 	static BWAPI::Unitset *structures_;
 	static BWAPI::Unitset *spells_;
 
-	static std::map<BWAPI::UnitType, std::unordered_set<Nolsy*>> unitCreateRegistry_;
-	static std::map<BWAPI::UnitType, std::unordered_set<Nolsy*>> unitCompleteRegistry_;
-	static std::map<BWAPI::UnitType, std::unordered_set<Nolsy*>> unitDestroyRegistry_;
+	static std::map<BWAPI::UnitType, std::unordered_set<NolsyBase*>> unitCreateRegistry_;
+	static std::map<BWAPI::UnitType, std::unordered_set<NolsyBase*>> unitCompleteRegistry_;
+	static std::map<BWAPI::UnitType, std::unordered_set<NolsyBase*>> unitDestroyRegistry_;
 };
