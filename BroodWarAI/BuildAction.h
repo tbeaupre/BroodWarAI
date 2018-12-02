@@ -32,7 +32,7 @@ public:
 	bool isUpgrade() const { return type_ == BuildActionEnums::ActionType::UPGRADE; }
 	bool isOther() const { return type_ == BuildActionEnums::ActionType::OTHER; }
 
-	void PrintAction() const;
+	const std::string PrintAction() const;
 
 private:
 	BuildActionEnums::ActionType type_;

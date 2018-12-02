@@ -1,9 +1,9 @@
 #pragma once
 #include "NolsyBase.h"
 
-class NolsyUnit : NolsyBase {
+class NolsyUnit : public NolsyBase {
 public:
-	NolsyUnit(const BuildAction *action);
+	NolsyUnit(BWAPI::UnitType unitType);
 	
 protected:
 	void Cancel();

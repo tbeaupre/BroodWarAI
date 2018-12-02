@@ -6,7 +6,8 @@ class UnitManager {
 public:
 	static void Init();
 
-	static BWAPI::Unit GetLarva();
+	static BWAPI::Unit ReserveLarva();
+	static void ReturnLarva(BWAPI::Unit larva);
 
 	static BWAPI::Unit ReserveWorker();
 	static void ReturnWorker(BWAPI::Unit worker);
@@ -24,6 +25,8 @@ public:
 	static void CreateUnit(BWAPI::Unit unit);
 	static void CompleteUnit(BWAPI::Unit unit);
 	static void DestroyUnit(BWAPI::Unit unit);
+
+	static size_t *GetCounts(); // DEBUG
 
 private:
 	static BWAPI::Unitset *larvae_;

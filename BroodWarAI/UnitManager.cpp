@@ -19,12 +19,18 @@ void UnitManager::Init() {
 	spells_ = new Unitset(Unitset::none);
 }
 
-BWAPI::Unit UnitManager::GetLarva() {
-	if (larvae_->empty()) return nullptr;
+BWAPI::Unit UnitManager::ReserveLarva() {
+	if (larvae_->empty()) {
+		return nullptr;
+	}
 
 	Unit toReturn = *larvae_->begin();
 	larvae_->erase(larvae_->begin());
 	return toReturn;
+}
+
+void UnitManager::ReturnLarva(BWAPI::Unit larva) {
+	larvae_->insert(larva);
 }
 
 BWAPI::Unit UnitManager::ReserveWorker() {
@@ -84,6 +90,7 @@ void UnitManager::CreateUnit(BWAPI::Unit unit) {
 
 void UnitManager::CompleteUnit(BWAPI::Unit unit) {
 	UnitType unitType = unit->getType();
+	BWAPI::Broodwar->drawTextScreen(50, 40, "Unit Complete: %s", unitType.c_str());
 	if (unitType.isNeutral()) return; // Ignore minerals and critters
 
 	auto nolsySetIter = unitCompleteRegistry_.find(unitType);
@@ -124,4 +131,13 @@ void UnitManager::DestroyUnit(BWAPI::Unit unit) {
 	} else {
 		units_->erase(unit);
 	}
+}
+
+size_t *UnitManager::GetCounts() {
+	return new size_t[4] {
+		larvae_->size(),
+		workers_->size(),
+		units_->size(),
+		structures_->size()
+	};
 }

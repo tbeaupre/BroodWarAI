@@ -3,9 +3,13 @@
 
 using namespace BWAPI;
 
-NolsyUnit::NolsyUnit(const BuildAction *action)
+static int nolsyCount = 0;
+
+NolsyUnit::NolsyUnit(UnitType unitType)
 {
-	unitType_ = *action_->getUnitType();
+	Broodwar << "[" << nolsyCount << "]NolsyUnit::NolsyUnit: " << unitType.toString() << std::endl;
+	nolsyCount++;
+	unitType_ = unitType;
 }
 
 void NolsyUnit::Cancel()
@@ -27,7 +31,7 @@ void NolsyUnit::HandleUnstarted()
 		source = UnitManager::ReserveUnit(unitType_.whatBuilds().first);
 		break;
 	default:
-		source = UnitManager::GetLarva();
+		source = UnitManager::ReserveLarva();
 		break;
 	}
 
@@ -37,6 +41,9 @@ void NolsyUnit::HandleUnstarted()
 			UnitManager::RegisterForUnitComplete(this, unitType_);
 			UnitManager::RegisterForUnitDestroy(this, unitType_);
 			status_ = CANCELLABLE;
-		};
+		} else {
+			Broodwar << "NolsyUnit::HandleUnstarted(): Could not morph unit." << std::endl;
+			UnitManager::ReturnLarva(source); // Assumes the source was a larva.
+		}
 	}
 }

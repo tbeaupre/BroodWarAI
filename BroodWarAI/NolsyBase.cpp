@@ -1,6 +1,6 @@
 #include "NolsyBase.h"
 #include "UnitManager.h"
-#include "BaseManager.h"
+#include "BuildManager.h"
 
 using namespace BWAPI;
 using namespace BuildActionEnums;
@@ -46,4 +46,5 @@ void NolsyBase::HardCancel() {
 
 void NolsyBase::Suicide() {
 	// Alright boys, pack it up.
+	BuildManager::CompleteAction();
 }

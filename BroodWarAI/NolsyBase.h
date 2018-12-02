@@ -22,7 +22,7 @@ protected:
 		CANCELLABLE
 	};
 
-	Status status_ = STOPPABLE;
+	Status status_ = UNSTARTED;
 	int sleep;
 	const BuildAction *action_;
 	BWAPI::Unit unit_;
