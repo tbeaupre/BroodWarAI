@@ -1,6 +1,7 @@
 #include "Clarence.h"
 #include <iostream>
 #include "UnitManager.h"
+#include "Debug.h"
 
 using namespace BWAPI;
 using namespace Filter;
@@ -88,6 +89,7 @@ void Clarence::onFrame() {
 		Broodwar->drawTextScreen(200, 20, "Average FPS: %f", Broodwar->getAverageFPS());
 		auto counts = UnitManager::GetCounts();
 		Broodwar->drawTextScreen(200, 40, "Larvae: %d   Workers: %d   Units: %d   Structures: %d", counts[0], counts[1], counts[2], counts[3]);
+		Debug::OnFrame();
 
 		// Return if the game is a replay or is paused
 		if (Broodwar->isReplay() || Broodwar->isPaused() || !Broodwar->self())
