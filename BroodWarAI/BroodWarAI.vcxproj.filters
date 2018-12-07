@@ -128,6 +128,7 @@
     </ClCompile>
     <ClCompile Include="NolsyOther.cpp">
       <Filter>Source Files\Nolsy</Filter>
+    </ClCompile>
     <ClCompile Include="Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -231,6 +232,7 @@
     </ClInclude>
     <ClInclude Include="NolsyOther.h">
       <Filter>Header Files\Nolsy</Filter>
+    </ClInclude>
     <ClInclude Include="Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
