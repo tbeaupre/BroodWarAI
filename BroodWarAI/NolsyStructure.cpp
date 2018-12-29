@@ -19,23 +19,23 @@ void NolsyStructure::Cancel()
 void NolsyStructure::HandleUnstarted()
 {
 	switch (unitType_) {
-	case UnitTypes::Zerg_Greater_Spire:
-	case UnitTypes::Zerg_Lair:
-	case UnitTypes::Zerg_Hive:
-		unit_ = UnitManager::ReserveStructure(unitType_.whatBuilds().first);
-		if (unit_ && unit_->exists()) {
-			if (unit_->build(unitType_)) {
-				UnitManager::RegisterForUnitComplete(this, unitType_);
-				status_ = CANCELLABLE;
+		case UnitTypes::Zerg_Greater_Spire:
+		case UnitTypes::Zerg_Lair:
+		case UnitTypes::Zerg_Hive:
+			unit_ = UnitManager::ReserveStructure(unitType_.whatBuilds().first);
+			if (unit_ && unit_->exists()) {
+				if (unit_->build(unitType_)) {
+					UnitManager::RegisterForUnitComplete(this, unitType_);
+					status_ = CANCELLABLE;
+				}
 			}
-		}
-		return;
-	case UnitTypes::Zerg_Extractor:
-		// This should probably be put under the Other action.
-		return;
-	case UnitTypes::Zerg_Creep_Colony:
-		// This should probably be put under the Other action.
-		return;
+			return;
+		case UnitTypes::Zerg_Extractor:
+			// This should probably be put under the Other action.
+			break;
+		case UnitTypes::Zerg_Creep_Colony:
+			// This should probably be put under the Other action.
+			break;
 	}
 
 	if (!unit_) {
