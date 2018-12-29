@@ -5,10 +5,12 @@ typedef std::vector<const BWEM::Base*> BaseVector;
 
 class BaseManager {
 public:
-	BaseManager(BWAPI::TilePosition startingPos);
+	static void Init(BWAPI::TilePosition startingPos);
+	static BWAPI::TilePosition GetNextBasePosition();
+	static void TakeNextBase();
+	static BaseVector getCurrentBases() { return currentBases_; }
 
 private:
-	BWAPI::TilePosition startPos_;
-	BaseVector availableBases_;
-	BaseVector currentBases_;
+	static BaseVector availableBases_;
+	static BaseVector currentBases_;
 };
