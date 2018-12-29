@@ -19,6 +19,7 @@ public:
 	BuildAction(const BWAPI::UnitType *unitType);
 	BuildAction(const BWAPI::TechType *techType);
 	BuildAction(const BWAPI::UpgradeType *upgradeType);
+	BuildAction(BuildActionEnums::OtherActionType otherType);
 
 	BuildActionEnums::ActionType getType() const { return type_; }
 	const BWAPI::UnitType *getUnitType() const { return unitType_; }
