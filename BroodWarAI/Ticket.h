@@ -10,9 +10,5 @@ class Ticket
 public:
 	Ticket(BuildAction* actionList);
 	~Ticket();
-protected:
 	Bill getTotalCost();
-
-private:
-	
 };
