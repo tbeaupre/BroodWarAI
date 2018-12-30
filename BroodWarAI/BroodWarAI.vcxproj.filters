@@ -119,6 +119,8 @@
     </ClCompile>
     <ClCompile Include="BankerUtilities.cpp">
       <Filter>Source Files\Banker</Filter>
+    <ClCompile Include="UnitManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +213,8 @@
     </ClInclude>
     <ClInclude Include="BankerUtilities.h">
       <Filter>Header Files\Banker</Filter>
+    <ClInclude Include="UnitManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

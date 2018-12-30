@@ -167,6 +167,7 @@
     <ClInclude Include="Bill.h" />
     <ClInclude Include="Prioritizer.h" />
     <ClInclude Include="Ticket.h" />
+    <ClInclude Include="UnitManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Banker.cpp" />
@@ -199,6 +200,7 @@
     <ClCompile Include="Clarence.cpp" />
     <ClCompile Include="Prioritizer.cpp" />
     <ClCompile Include="Ticket.cpp" />
+    <ClCompile Include="UnitManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

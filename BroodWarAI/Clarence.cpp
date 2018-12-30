@@ -1,6 +1,7 @@
 #include "Clarence.h"
 #include "BWEM 1.4.1\src\bwem.h"
 #include <iostream>
+#include "UnitManager.h"
 
 using namespace BWAPI;
 using namespace Filter;
@@ -45,6 +46,7 @@ void Clarence::onStart() {
 
 		} else // if this is not a replay
 		{
+			UnitManager::Init();
 			buildManager = new BuildManager();
 			BWAPI::Broodwar->setLocalSpeed(0);
 
@@ -271,6 +273,7 @@ void Clarence::onUnitDestroy(BWAPI::Unit unit) {
 	try {
 		if (unit->getType().isMineralField()) theMap.OnMineralDestroyed(unit);
 		else if (unit->getType().isSpecialBuilding()) theMap.OnStaticBuildingDestroyed(unit);
+		UnitManager::DestroyUnit(unit);
 	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}
@@ -302,4 +305,6 @@ void Clarence::onSaveGame(std::string gameName) {
 	}
 }
 
-void Clarence::onUnitComplete(BWAPI::Unit unit) {}
+void Clarence::onUnitComplete(BWAPI::Unit unit) {
+	UnitManager::CompleteUnit(unit);
+}
