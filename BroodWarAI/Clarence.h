@@ -1,6 +1,7 @@
 #pragma once
 #include <BWAPI.h>
 #include "BuildManager.h"
+#include "BaseManager.h"
 
 // Remember not to use "Broodwar" in any global class constructor!
 

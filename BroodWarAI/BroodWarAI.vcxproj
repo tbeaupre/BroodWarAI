@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="Banker.h" />
     <ClInclude Include="BankerUtilities.h" />
+    <ClInclude Include="BaseManager.h" />
     <ClInclude Include="BuildAction.h" />
     <ClInclude Include="BuildManager.h" />
     <ClInclude Include="BuildOrders.h" />
@@ -167,6 +168,12 @@
     <ClInclude Include="Bill.h" />
     <ClInclude Include="Prioritizer.h" />
     <ClInclude Include="Ticket.h" />
+    <ClInclude Include="NolsyBase.h" />
+    <ClInclude Include="NolsyOther.h" />
+    <ClInclude Include="NolsyStructure.h" />
+    <ClInclude Include="NolsyTech.h" />
+    <ClInclude Include="NolsyUnit.h" />
+    <ClInclude Include="NolsyUpgrade.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="UnitManager.h" />
   </ItemGroup>
@@ -174,6 +181,7 @@
     <ClCompile Include="Banker.cpp" />
     <ClCompile Include="BankerUtilities.cpp" />
     <ClCompile Include="Bill.cpp" />
+    <ClCompile Include="BaseManager.cpp" />
     <ClCompile Include="BuildAction.cpp" />
     <ClCompile Include="BuildCondition.cpp" />
     <ClCompile Include="BuildManager.cpp" />
@@ -202,6 +210,12 @@
     <ClCompile Include="Clarence.cpp" />
     <ClCompile Include="Prioritizer.cpp" />
     <ClCompile Include="Ticket.cpp" />
+    <ClCompile Include="NolsyBase.cpp" />
+    <ClCompile Include="NolsyOther.cpp" />
+    <ClCompile Include="NolsyStructure.cpp" />
+    <ClCompile Include="NolsyTech.cpp" />
+    <ClCompile Include="NolsyUnit.cpp" />
+    <ClCompile Include="NolsyUpgrade.cpp" />
     <ClCompile Include="UnitManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

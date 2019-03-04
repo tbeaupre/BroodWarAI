@@ -72,7 +72,6 @@ bool BuildCondition::IsUnitConditionMet() const {
 			}
 		}
 	}
-	BWAPI::Broodwar << count << "/" << value_ << " " << unitType_->toString() << std::endl;
 	return count >= value_;
 }
 
