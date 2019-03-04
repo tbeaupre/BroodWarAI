@@ -167,6 +167,7 @@
     <ClInclude Include="Bill.h" />
     <ClInclude Include="Prioritizer.h" />
     <ClInclude Include="Ticket.h" />
+    <ClInclude Include="Debug.h" />
     <ClInclude Include="UnitManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +197,7 @@
     <ClCompile Include="BWEM 1.4.1\src\tiles.cpp" />
     <ClCompile Include="BWEM 1.4.1\src\utils.cpp" />
     <ClCompile Include="BWEM 1.4.1\src\winutils.cpp" />
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Dll.cpp" />
     <ClCompile Include="Clarence.cpp" />
     <ClCompile Include="Prioritizer.cpp" />
