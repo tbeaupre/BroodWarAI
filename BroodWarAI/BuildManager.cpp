@@ -1,5 +1,6 @@
 #include "BuildManager.h"
 #include "NolsyUnit.h"
+#include "NolsyOther.h"
 
 using namespace BuildActionEnums;
 
@@ -14,6 +15,7 @@ void BuildManager::Init() {
 	overPool.insert(overPool.end(), h3SpireH5Hydra.begin(), h3SpireH5Hydra.end());
 
 	build_ = overPool;
+	build_ = BuildOrders::GetTest();
 }
 
 void BuildManager::OnFrame() {
@@ -53,6 +55,9 @@ void BuildManager::HandleAction() {
 			break;
 		case ActionType::UPGRADE:
 			HandleUpgradeAction();
+			break;
+		case ActionType::OTHER:
+			HandleOtherAction();
 			break;
 	}
 }
@@ -114,6 +119,10 @@ void BuildManager::HandleUpgradeAction() {
 	if (researcher) {
 		researcher->upgrade(toUpgrade);
 	}
+}
+
+void BuildManager::HandleOtherAction() {
+	nolsy_ = new NolsyOther(currentAction_->getOtherType());
 }
 
 void BuildManager::CompleteAction() {

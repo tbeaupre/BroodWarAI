@@ -1,7 +1,7 @@
 #pragma once
 #include "NolsyBase.h"
 
-class NolsyOther : NolsyBase {
+class NolsyOther : public NolsyBase {
 public:
 	NolsyOther(BuildActionEnums::OtherActionType otherType);
 
@@ -10,7 +10,7 @@ public:
 protected:
 	void Cancel();
 	void HandleUnstarted();
-	void HandleCancellable() {};
+	void HandleCancellable();
 
 private:
 	BuildActionEnums::OtherActionType otherType_;
