@@ -1,7 +1,7 @@
 #pragma once
 #include "NolsyBase.h"
 
-class NolsyUpgrade : NolsyBase {
+class NolsyUpgrade : public NolsyBase {
 public:
 	NolsyUpgrade(const BuildAction *action);
 

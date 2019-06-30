@@ -1,9 +1,14 @@
 #pragma once
+#include "NolsyStructure.h"
+#include "NolsyUnit.h"
+#include "NolsyOther.h"
+#include "NolsyUpgrade.h"
+#include "NolsyTech.h"
 #include "BuildAction.h"
 #include "NolsyBase.h"
 
 class NolsyFactory
 {
 public:
-	static NolsyBase createNolsy(BuildAction *action);
+	NolsyBase* createNolsy(BuildAction *action);
 };
