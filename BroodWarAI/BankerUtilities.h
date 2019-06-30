@@ -1,5 +1,5 @@
 #pragma once
-static class BankerUtilities
+class BankerUtilities
 {
 
 };

@@ -3,14 +3,15 @@
 
 namespace BuildActionEnums {
 	enum ActionType {
+		STRUCTURE,
 		UNIT,
 		UPGRADE,
 		TECH,
-		OTHER,
+		OTHER
 	};
 
 	enum OtherActionType {
-		EXPAND,
+		EXPAND
 	};
 }
 

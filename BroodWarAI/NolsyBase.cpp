@@ -5,6 +5,8 @@
 using namespace BWAPI;
 using namespace BuildActionEnums;
 
+/* "Nolsy Base" as in Base Class for Nolsy, not strictly for making a new base. M8 this is your fuckin... whatever cash-in-handy-man class*/
+
 void NolsyBase::Update() {
 	switch (status_) {
 	case CANCELLABLE:

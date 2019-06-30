@@ -1,7 +1,7 @@
 #pragma once
 #include "Ticket.h"
 
-static class Banker
+class Banker
 {
 
 private:

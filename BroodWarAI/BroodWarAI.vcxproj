@@ -166,6 +166,7 @@
     <ClInclude Include="Clarence.h" />
     <ClInclude Include="BuildCondition.h" />
     <ClInclude Include="Bill.h" />
+    <ClInclude Include="NolsyFactory.h" />
     <ClInclude Include="Prioritizer.h" />
     <ClInclude Include="Ticket.h" />
     <ClInclude Include="NolsyBase.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Dll.cpp" />
     <ClCompile Include="Clarence.cpp" />
+    <ClCompile Include="NolsyFactory.cpp" />
     <ClCompile Include="Prioritizer.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="NolsyBase.cpp" />

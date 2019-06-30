@@ -1,5 +1,8 @@
+#pragma once
 #include "Banker.h"
 #include "Ticket.h"
+#include "NolsyBase.h"
+#include <iterator>
 #include <queue>
 #define QUEUE_COUNT 10
 
@@ -16,8 +19,8 @@ Ticket * Banker::Peek()
 {
 	for each (queue<Ticket*> queue in queueArray_)
 	{
-		if (queue.size > 0) {
-			return queue.front;
+		if (size(queue) > 0) {
+			return queue.front();
 		}
 	}
 	return nullptr;
@@ -28,8 +31,8 @@ Ticket * Banker::Pop()
 	int index = 0;
 	for each (queue<Ticket*> queue in queueArray_)
 	{
-		if (queue.size > 0) {
-			Ticket *toReturn = queue.front;
+		if (size(queue) > 0) {
+			Ticket *toReturn = queue.front();
 			queue.pop();
 			if (index == 0) lock_ = true;
 			return toReturn;
@@ -42,16 +45,20 @@ Ticket * Banker::Pop()
 bool Banker::Satisfiable(Ticket *toBuild, int min, int gas, int supply, int larva)
 {
 	Bill toSatisfy = toBuild->getTotalCost();
-	return (min >= toSatisfy.minerals &&
-			gas >= toSatisfy.gas &&
-			supply >= toSatisfy.supply &&
-			larva >= toSatisfy.larva);
+	return (
+		min >= toSatisfy.minerals &&
+		gas >= toSatisfy.gas &&
+		supply >= toSatisfy.supply &&
+		larva >= toSatisfy.larva); // its yer boy larva
 }
 
 void Banker::FireOffANolsy()
 {
-
+	for each (BuildAction *action in next_ -> getActionList()) {
+		
+	}
 }
+
 
 void Banker::Update(int min, int gas, int supply, int larva)
 {
@@ -68,7 +75,7 @@ void Banker::Update(int min, int gas, int supply, int larva)
 
 void Banker::AddTicketToQueue(Ticket *ticket, int priority)
 {
-	if (priority >= QUEUE_COUNT) priority = QUEUE_COUNT-1; // if the priority is super low, add it to the last available queue. 
+	if (priority >= QUEUE_COUNT) priority = QUEUE_COUNT - 1; // if the priority is super low, add it to the last available queue. 
 	queueArray_[priority].push(ticket);
 }
 

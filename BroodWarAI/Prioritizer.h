@@ -1,8 +1,11 @@
 #pragma once
 #include "BuildAction.h"
-static class Prioritizer
+#include <vector>
+
+
+class Prioritizer
 {
 public:
-	void FileRequest(BuildAction *action, int priority = 1);
+	static void FileRequest(std::vector<BuildAction*> action, int priority = 1);
 };
 
