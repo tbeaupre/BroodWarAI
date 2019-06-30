@@ -1,7 +1,19 @@
 #include "BWAPI.h"
 #include "BuildOrders.h"
 
+using namespace BWAPI;
+using namespace BuildActionEnums;
 using namespace BuildConditionEnums;
+
+BuildOrder BuildOrders::GetTest() {
+	return BuildOrder({
+		new BuildOrderStep(
+			new BuildAction(&UnitTypes::Zerg_Drone),
+			1),
+		new BuildOrderStep(
+			new BuildAction(EXPAND))
+	});
+}
 
 BuildOrder BuildOrders::GetOverPool() {
 	return BuildOrder({
@@ -20,7 +32,7 @@ BuildOrder BuildOrders::GetOverPool() {
 			new BuildAction(&BWAPI::UnitTypes::Zerg_Zergling),
 			3),
 		new BuildOrderStep(
-			new BuildAction(&BWAPI::UnitTypes::Zerg_Hatchery)),
+			new BuildAction(EXPAND)),
 		new BuildOrderStep(
 			new BuildCondition(&BWAPI::UnitTypes::Zerg_Hatchery, 2),
 			new BuildAction(&BWAPI::UnitTypes::Zerg_Hatchery)),

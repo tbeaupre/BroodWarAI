@@ -61,7 +61,7 @@ void Clarence::onStart() {
 			theMap.EnableAutomaticPathAnalysis();
 			bool startingLocationsOK = theMap.FindBasesForStartingLocations();
 			assert(startingLocationsOK);
-			//baseManager_ = new BaseManager(Broodwar->self()->getStartLocation());
+			BaseManager::Init(Broodwar->self()->getStartLocation());
 		}
 	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
@@ -136,7 +136,6 @@ void Clarence::onFrame() {
 						}
 					}
 				} // closure: if idle
-
 			}
 		} // closure: unit iterator
 	} catch (const std::exception &e) {
