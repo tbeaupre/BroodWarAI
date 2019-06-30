@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseManager.h" />
     <ClInclude Include="BuildAction.h" />
     <ClInclude Include="BuildManager.h" />
     <ClInclude Include="BuildOrders.h" />
@@ -162,10 +163,17 @@
     <ClInclude Include="BWEM 1.4.1\src\winutils.h" />
     <ClInclude Include="Clarence.h" />
     <ClInclude Include="BuildCondition.h" />
+    <ClInclude Include="NolsyBase.h" />
+    <ClInclude Include="NolsyOther.h" />
+    <ClInclude Include="NolsyStructure.h" />
+    <ClInclude Include="NolsyTech.h" />
+    <ClInclude Include="NolsyUnit.h" />
+    <ClInclude Include="NolsyUpgrade.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="UnitManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseManager.cpp" />
     <ClCompile Include="BuildAction.cpp" />
     <ClCompile Include="BuildCondition.cpp" />
     <ClCompile Include="BuildManager.cpp" />
@@ -192,6 +200,12 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Dll.cpp" />
     <ClCompile Include="Clarence.cpp" />
+    <ClCompile Include="NolsyBase.cpp" />
+    <ClCompile Include="NolsyOther.cpp" />
+    <ClCompile Include="NolsyStructure.cpp" />
+    <ClCompile Include="NolsyTech.cpp" />
+    <ClCompile Include="NolsyUnit.cpp" />
+    <ClCompile Include="NolsyUpgrade.cpp" />
     <ClCompile Include="UnitManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

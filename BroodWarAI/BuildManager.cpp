@@ -1,10 +1,13 @@
 #include "BuildManager.h"
+#include "NolsyUnit.h"
+#include "NolsyOther.h"
 
 using namespace BuildActionEnums;
 
 BuildOrder BuildManager::build_;
 int BuildManager::currentStep_ = 0;
 const BuildAction *BuildManager::currentAction_ = nullptr;
+NolsyBase* BuildManager::nolsy_ = nullptr;
 
 void BuildManager::Init() {
 	BuildOrder overPool = BuildOrders::GetOverPool();
@@ -12,10 +15,12 @@ void BuildManager::Init() {
 	overPool.insert(overPool.end(), h3SpireH5Hydra.begin(), h3SpireH5Hydra.end());
 
 	build_ = overPool;
+	build_ = BuildOrders::GetTest();
 }
 
 void BuildManager::OnFrame() {
 	if (currentAction_ != nullptr) {
+		BWAPI::Broodwar->drawTextScreen(50, 0, "Current Action: %s", currentAction_->PrintAction().c_str());
 		HandleAction();
 	} else {
 		// Start a new action.
@@ -33,6 +38,10 @@ void BuildManager::OnFrame() {
 }
 
 void BuildManager::HandleAction() {
+	if (nolsy_) {
+		nolsy_->Update();
+		return;
+	}
 	switch (currentAction_->getType()) {
 		case ActionType::UNIT:
 			if (currentAction_->isBuilding()) {
@@ -47,21 +56,14 @@ void BuildManager::HandleAction() {
 		case ActionType::UPGRADE:
 			HandleUpgradeAction();
 			break;
+		case ActionType::OTHER:
+			HandleOtherAction();
+			break;
 	}
 }
 
 void BuildManager::HandleUnitAction() {
-	BWAPI::Unitset larvaSet = BWAPI::Broodwar->self()->getUnits().getLarva();
-	auto larvaIter = larvaSet.begin();
-	if (larvaIter != larvaSet.end()) {
-		// There are some larva to choose from.
-		BWAPI::Unit larva = *larvaIter;
-		if (larva->exists()) {
-			if (larva->morph(*currentAction_->getUnitType())) {
-				CompleteAction();
-			}
-		}
-	}
+	nolsy_ = new NolsyUnit(*currentAction_->getUnitType());
 }
 
 void BuildManager::HandleBuildingAction() {
@@ -119,14 +121,17 @@ void BuildManager::HandleUpgradeAction() {
 	}
 }
 
-void BuildManager::CompleteAction() {
-	BWAPI::Broodwar << "Action Completed ";
-	currentAction_->PrintAction();
+void BuildManager::HandleOtherAction() {
+	nolsy_ = new NolsyOther(currentAction_->getOtherType());
+}
 
+void BuildManager::CompleteAction() {
+	BWAPI::Broodwar->drawTextScreen(50, 20, "Job's Done!");
+	delete nolsy_;
+	nolsy_ = nullptr;
 	BuildOrderStep *step = build_[currentStep_];
 	step->setComplete();
 	if (step->isComplete()) {
-		BWAPI::Broodwar << "Moving to Next Build Step" << std::endl;
 		currentAction_ = nullptr;
 		++currentStep_;
 	}

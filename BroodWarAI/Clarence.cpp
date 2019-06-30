@@ -1,5 +1,4 @@
 #include "Clarence.h"
-#include "BWEM 1.4.1\src\bwem.h"
 #include <iostream>
 #include "UnitManager.h"
 #include "Debug.h"
@@ -49,7 +48,7 @@ void Clarence::onStart() {
 		{
 			UnitManager::Init();
 			BuildManager::Init();
-			BWAPI::Broodwar->setLocalSpeed(0);
+			BWAPI::Broodwar->setLocalSpeed(20);
 
 			// Retrieve you and your enemy's races. enemy() will just return the first enemy.
 			// If you wish to deal with multiple enemies then you must use enemies().
@@ -62,8 +61,7 @@ void Clarence::onStart() {
 			theMap.EnableAutomaticPathAnalysis();
 			bool startingLocationsOK = theMap.FindBasesForStartingLocations();
 			assert(startingLocationsOK);
-
-			Broodwar << "glhf" << std::endl;
+			BaseManager::Init(Broodwar->self()->getStartLocation());
 		}
 	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
@@ -89,6 +87,8 @@ void Clarence::onFrame() {
 		// Display the game frame rate as text in the upper left area of the screen
 		Broodwar->drawTextScreen(200, 0, "FPS: %d", Broodwar->getFPS());
 		Broodwar->drawTextScreen(200, 20, "Average FPS: %f", Broodwar->getAverageFPS());
+		auto counts = UnitManager::GetCounts();
+		Broodwar->drawTextScreen(200, 40, "Larvae: %d   Workers: %d   Units: %d   Structures: %d", counts[0], counts[1], counts[2], counts[3]);
 		Debug::OnFrame();
 
 		// Return if the game is a replay or is paused
@@ -136,7 +136,6 @@ void Clarence::onFrame() {
 						}
 					}
 				} // closure: if idle
-
 			}
 		} // closure: unit iterator
 	} catch (const std::exception &e) {
@@ -214,6 +213,7 @@ void Clarence::onUnitCreate(BWAPI::Unit unit) {
 				Broodwar->sendText("%.2d:%.2d: %s creates a %s", minutes, seconds, unit->getPlayer()->getName().c_str(), unit->getType().c_str());
 			}
 		}
+		UnitManager::CreateUnit(unit);
 	} catch (const std::exception &e) {
 		Broodwar << "EXCEPTION: " << e.what() << std::endl;
 	}

@@ -17,19 +17,22 @@ BuildAction::BuildAction(const BWAPI::UpgradeType *upgradeType) {
 	upgradeType_ = upgradeType;
 }
 
-void BuildAction::PrintAction() const {
+BuildAction::BuildAction(BuildActionEnums::OtherActionType otherType) {
+	type_ = ActionType::OTHER;
+	otherType_ = otherType;
+}
+
+const std::string BuildAction::PrintAction() const {
 	switch (type_) {
 		case ActionType::UNIT:
-			BWAPI::Broodwar << unitType_->toString() << std::endl;
-			break;
+			return unitType_->toString();
 		case ActionType::TECH:
-			BWAPI::Broodwar << techType_->toString() << std::endl;
-			break;
+			return techType_->toString();
 		case ActionType::UPGRADE:
-			BWAPI::Broodwar << upgradeType_->toString() << std::endl;
-			break;
+			return upgradeType_->toString();
+		case ActionType::OTHER:
+			return "Expanding";
 		default:
-			BWAPI::Broodwar << std::endl;
-			break;
+			return "";
 	}
 }
