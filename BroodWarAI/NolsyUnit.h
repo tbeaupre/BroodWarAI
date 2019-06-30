@@ -3,7 +3,7 @@
 
 class NolsyUnit : public NolsyBase {
 public:
-	NolsyUnit(BWAPI::UnitType unitType);
+	NolsyUnit(BWAPI::UnitType *unitType);
 	
 protected:
 	void Cancel();

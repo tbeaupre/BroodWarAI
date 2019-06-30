@@ -1,20 +1,32 @@
 #pragma once
 #include "NolsyFactory.h"
+#include <exception>
 
 using namespace std;
 using namespace BuildActionEnums;
 
-NolsyBase* createNolsy(BuildAction *action) {
+static NolsyBase *createNolsy(BuildAction *action) {
+	NolsyBase *mike_nolan;
 	switch (action->getType) {
 	case STRUCTURE:
-		return new NolsyStructure(action);
+		mike_nolan = new NolsyStructure(action);
+		break;
 	case UNIT:
-		return new NolsyUnit(action->getUnitType);
+		mike_nolan = new NolsyUnit(action->getUnitType);
+		break;
 	case UPGRADE:
-		return new NolsyUpgrade(action);
+		mike_nolan = new NolsyUpgrade(action);
+		break;
 	case TECH:
-		return new NolsyTech(action);
+		mike_nolan = new NolsyTech(action);
+		break;
 	case OTHER:
-		return new NolsyOther(action->getOtherType);
+		mike_nolan = new NolsyOther(action->getOtherType);
+		break;
+	default:
+		cout << "ah fuck off cunt";
+		return;
 	}
+	mike_nolan->Create();
+	return mike_nolan;
 }

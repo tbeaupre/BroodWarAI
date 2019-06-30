@@ -2,6 +2,7 @@
 #include "Banker.h"
 #include "Ticket.h"
 #include "NolsyBase.h"
+#include "NolsyFactory.h"
 #include <iterator>
 #include <queue>
 #define QUEUE_COUNT 10
@@ -13,6 +14,8 @@ static vector<queue<Ticket*>> queueArray_ = vector<queue<Ticket*>>(QUEUE_COUNT);
 static Ticket *next_ = nullptr;
 // when lock == true, no resources can be spent until the current ticket is out the door. If false, lower priority tickets can be fired.
 static bool lock_ = false;
+NolsyFactory nolsyFactory;
+
 
 
 Ticket * Banker::Peek()
@@ -52,10 +55,10 @@ bool Banker::Satisfiable(Ticket *toBuild, int min, int gas, int supply, int larv
 		larva >= toSatisfy.larva); // its yer boy larva
 }
 
-void Banker::FireOffANolsy()
+void Banker::FireOffAFewNolsies()
 {
 	for each (BuildAction *action in next_ -> getActionList()) {
-		
+		NolsyBase* toFire = nolsyFactory.createNolsy(action);
 	}
 }
 
@@ -66,7 +69,7 @@ void Banker::Update(int min, int gas, int supply, int larva)
 		next_ = Pop();
 	}
 	if (Satisfiable(next_, min, gas, supply, larva)) {
-		FireOffANolsy();
+		FireOffAFewNolsies();
 	}
 	else {
 

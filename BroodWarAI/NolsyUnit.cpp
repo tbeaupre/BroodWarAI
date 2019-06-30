@@ -5,11 +5,11 @@ using namespace BWAPI;
 
 static int nolsyCount = 0;
 
-NolsyUnit::NolsyUnit(UnitType unitType)
+NolsyUnit::NolsyUnit(UnitType *unitType)
 {
-	Broodwar << "[" << nolsyCount << "]NolsyUnit::NolsyUnit: " << unitType.toString() << std::endl;
+	Broodwar << "[" << nolsyCount << "]NolsyUnit::NolsyUnit: " << unitType->toString() << std::endl;
 	nolsyCount++;
-	unitType_ = unitType;
+	unitType_ = *unitType;
 }
 
 void NolsyUnit::Cancel()

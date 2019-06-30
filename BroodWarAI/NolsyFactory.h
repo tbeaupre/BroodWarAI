@@ -7,7 +7,7 @@
 #include "BuildAction.h"
 #include "NolsyBase.h"
 
-class NolsyFactory
+static class NolsyFactory
 {
 public:
 	NolsyBase* createNolsy(BuildAction *action);
