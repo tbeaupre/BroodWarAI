@@ -6,10 +6,13 @@ public:
 	NolsyUpgrade(const BuildAction *action);
 
 protected:
-	void Cancel();
 	void HandleUnstarted();
 	void HandleCancellable();
+	void Cancel();
+
+	void Suicide();
 
 private :
 	BWAPI::UpgradeType upgradeType_;
+	int sleep_;
 };

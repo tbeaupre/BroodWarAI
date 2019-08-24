@@ -6,9 +6,10 @@ public:
 	NolsyStructure(const BuildAction *action);
 
 protected:
-	void Cancel();
 	void HandleUnstarted();
-	void HandleCancellable() {};
+	void Cancel();
+
+	void Suicide();
 
 private:
 	BWAPI::UnitType unitType_;

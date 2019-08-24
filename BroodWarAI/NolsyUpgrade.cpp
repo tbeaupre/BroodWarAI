@@ -8,19 +8,11 @@ NolsyUpgrade::NolsyUpgrade(const BuildAction *action)
 	upgradeType_ = *action->getUpgradeType();
 }
 
-void NolsyUpgrade::Cancel()
-{
-	if (!unit_) {
-		return; // If the build hasn't started, don't worry about canceling it.
-	}
-	unit_->cancelUpgrade();
-}
-
 void NolsyUpgrade::HandleUnstarted()
 {
 	if (Broodwar->self()->isUpgrading(upgradeType_)) {
 		Broodwar << "Upgrade successfully started." << std::endl;
-		sleep = upgradeType_.upgradeTime(Broodwar->self()->getUpgradeLevel(upgradeType_) + 1);
+		sleep_ = upgradeType_.upgradeTime(Broodwar->self()->getUpgradeLevel(upgradeType_) + 1);
 		status_ = CANCELLABLE;
 		return;
 	}
@@ -36,8 +28,21 @@ void NolsyUpgrade::HandleUnstarted()
 
 void NolsyUpgrade::HandleCancellable()
 {
-	if (--sleep <= 0) {
-		UnitManager::ReturnStructure(unit_);
+	if (--sleep_ <= 0) {
 		Suicide();
 	}
+}
+
+void NolsyUpgrade::Cancel() {
+	if (!unit_) {
+		return; // If the build hasn't started, don't worry about canceling it.
+	}
+	unit_->cancelUpgrade();
+}
+
+void NolsyUpgrade::Suicide() {
+	if (unit_) {
+		UnitManager::ReturnStructure(unit_);
+	}
+	NolsyBase::Suicide();
 }
