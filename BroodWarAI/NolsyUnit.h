@@ -6,9 +6,10 @@ public:
 	NolsyUnit(BWAPI::UnitType unitType);
 	
 protected:
-	void Cancel();
 	void HandleUnstarted();
-	void HandleCancellable() {};
+	void Cancel();
+
+	void Suicide();
 
 private:
 	BWAPI::UnitType unitType_;

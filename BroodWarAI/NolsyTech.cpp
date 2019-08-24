@@ -8,19 +8,11 @@ NolsyTech::NolsyTech(const BuildAction *action)
 	techType_ = *action->getTechType();
 }
 
-void NolsyTech::Cancel()
-{
-	if (!unit_) {
-		return; // If the build hasn't started, don't worry about canceling it.
-	}
-	unit_->cancelResearch();
-}
-
 void NolsyTech::HandleUnstarted()
 {
 	if (BWAPI::Broodwar->self()->isResearching(techType_)) {
 		Broodwar << "Tech successfully started." << std::endl;
-		sleep = techType_.researchTime();
+		sleep_ = techType_.researchTime();
 		status_ = CANCELLABLE;
 		return;
 	}
@@ -36,8 +28,22 @@ void NolsyTech::HandleUnstarted()
 
 void NolsyTech::HandleCancellable()
 {
-	if (--sleep <= 0) {
+	if (--sleep_ <= 0) {
 		UnitManager::ReturnStructure(unit_);
 		Suicide();
 	}
+}
+
+void NolsyTech::Cancel() {
+	if (!unit_) {
+		return; // If the build hasn't started, don't worry about canceling it.
+	}
+	unit_->cancelResearch();
+}
+
+void NolsyTech::Suicide() {
+	if (unit_) {
+		UnitManager::ReturnStructure(unit_);
+	}
+	NolsyBase::Suicide();
 }

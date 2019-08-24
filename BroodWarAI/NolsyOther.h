@@ -5,12 +5,14 @@ class NolsyOther : public NolsyBase {
 public:
 	NolsyOther(BuildActionEnums::OtherActionType otherType);
 
-	void Complete();
+	void OnCompleteUnit();
 
 protected:
-	void Cancel();
 	void HandleUnstarted();
-	void HandleCancellable();
+	void HandleStoppable();
+	void Cancel();
+
+	void Suicide();
 
 private:
 	BuildActionEnums::OtherActionType otherType_;

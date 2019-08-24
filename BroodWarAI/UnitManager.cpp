@@ -7,9 +7,8 @@ BWAPI::Unitset *UnitManager::workers_;
 BWAPI::Unitset *UnitManager::units_;
 BWAPI::Unitset *UnitManager::structures_;
 BWAPI::Unitset *UnitManager::spells_;
-std::map<BWAPI::UnitType, std::unordered_set<NolsyBase*>> UnitManager::unitCreateRegistry_;
-std::map<BWAPI::UnitType, std::unordered_set<NolsyBase*>> UnitManager::unitCompleteRegistry_;
-std::map<BWAPI::UnitType, std::unordered_set<NolsyBase*>> UnitManager::unitDestroyRegistry_;
+std::map<BWAPI::Unit, NolsyBase*> UnitManager::unitCreateRegistry_;
+std::map<BWAPI::Unit, NolsyBase*> UnitManager::unitCompleteRegistry_;
 
 void UnitManager::Init() {
 	larvae_ = new Unitset(Unitset::none);
@@ -31,6 +30,7 @@ BWAPI::Unit UnitManager::ReserveLarva() {
 
 void UnitManager::ReturnLarva(BWAPI::Unit larva) {
 	larvae_->insert(larva);
+	UnregisterForUnitComplete(larva);
 }
 
 BWAPI::Unit UnitManager::ReserveWorker() {
@@ -43,6 +43,7 @@ BWAPI::Unit UnitManager::ReserveWorker() {
 
 void UnitManager::ReturnWorker(BWAPI::Unit worker) {
 	workers_->insert(worker);
+	UnregisterForUnitCreate(worker);
 }
 
 BWAPI::Unit UnitManager::ReserveStructure(BWAPI::UnitType structureType) {
@@ -55,6 +56,7 @@ BWAPI::Unit UnitManager::ReserveStructure(BWAPI::UnitType structureType) {
 
 void UnitManager::ReturnStructure(BWAPI::Unit structure) {
 	structures_->insert(structure);
+	UnregisterForUnitComplete(structure);
 }
 
 BWAPI::Unit UnitManager::ReserveUnit(BWAPI::UnitType unitType) {
@@ -67,24 +69,30 @@ BWAPI::Unit UnitManager::ReserveUnit(BWAPI::UnitType unitType) {
 
 void UnitManager::ReturnUnit(BWAPI::Unit unit) {
 	units_->insert(unit);
+	UnregisterForUnitComplete(unit);
 }
 
-void UnitManager::RegisterForUnitCreate(NolsyBase *nolsy, BWAPI::UnitType unitType) {
-	unitCreateRegistry_[unitType].insert(nolsy);
+void UnitManager::RegisterForUnitCreate(NolsyBase *nolsy, BWAPI::Unit unit) {
+	unitCreateRegistry_[unit] = nolsy;
 }
 
-void UnitManager::RegisterForUnitComplete(NolsyBase *nolsy, BWAPI::UnitType unitType) {
-	unitCompleteRegistry_[unitType].insert(nolsy);
+void UnitManager::RegisterForUnitComplete(NolsyBase *nolsy, BWAPI::Unit unit) {
+	unitCompleteRegistry_[unit] = nolsy;
 }
 
-void UnitManager::RegisterForUnitDestroy(NolsyBase *nolsy, BWAPI::UnitType unitType) {
-	unitDestroyRegistry_[unitType].insert(nolsy);
+void UnitManager::UnregisterForUnitCreate(BWAPI::Unit unit) {
+	unitCreateRegistry_.erase(unit);
+}
+
+void UnitManager::UnregisterForUnitComplete(BWAPI::Unit unit) {
+	unitCompleteRegistry_.erase(unit);
 }
 
 void UnitManager::CreateUnit(BWAPI::Unit unit) {
-	auto nolsySetIter = unitCreateRegistry_.find(unit->getType());
+	auto nolsySetIter = unitCreateRegistry_.find(unit);
 	if (nolsySetIter != unitCreateRegistry_.end()) {
-		(*(*nolsySetIter).second.begin())->Create();
+		(*nolsySetIter).second->OnCreateUnit();
+		UnregisterForUnitCreate(unit);
 	}
 }
 
@@ -93,10 +101,10 @@ void UnitManager::CompleteUnit(BWAPI::Unit unit) {
 	BWAPI::Broodwar->drawTextScreen(50, 40, "Unit Complete: %s", unitType.c_str());
 	if (unitType.isNeutral()) return; // Ignore minerals and critters
 
-	auto nolsySetIter = unitCompleteRegistry_.find(unitType);
+	auto nolsySetIter = unitCompleteRegistry_.find(unit);
 	if (nolsySetIter != unitCompleteRegistry_.end()) {
-		// Need to go from iterator -> pair -> unordered_set -> nolsy, so this looks pretty gnarly...
-		(*(*nolsySetIter).second.begin())->Complete();
+		(*nolsySetIter).second->OnCompleteUnit();
+		UnregisterForUnitComplete(unit);
 	}
 
 	if (unitType == UnitTypes::Zerg_Larva) {
@@ -116,10 +124,16 @@ void UnitManager::DestroyUnit(BWAPI::Unit unit) {
 	UnitType unitType = unit->getType();
 	if (unitType.isNeutral()) return; // Ignore minerals and critters
 
-	auto nolsySetIter = unitDestroyRegistry_.find(unitType);
-	if (nolsySetIter != unitDestroyRegistry_.end()) {
-		// Need to go from iterator -> pair -> unordered_set -> nolsy, so this looks pretty gnarly...
-		(*(*nolsySetIter).second.begin())->Destroy();
+	auto nolsySetIter = unitCompleteRegistry_.find(unit);
+	if (nolsySetIter != unitCompleteRegistry_.end()) {
+		(*nolsySetIter).second->OnDestroyUnit();
+		UnregisterForUnitComplete(unit);
+	} else {
+		nolsySetIter = unitCreateRegistry_.find(unit);
+		if (nolsySetIter != unitCreateRegistry_.end()) {
+			(*nolsySetIter).second->OnDestroyUnit();
+			UnregisterForUnitCreate(unit);
+		}
 	}
 
 	if (unitType == UnitTypes::Zerg_Drone) {

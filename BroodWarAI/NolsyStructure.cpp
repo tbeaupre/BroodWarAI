@@ -5,15 +5,7 @@ using namespace BWAPI;
 
 NolsyStructure::NolsyStructure(const BuildAction *action)
 {
-	unitType_ = *action_->getUnitType();
-}
-
-void NolsyStructure::Cancel()
-{
-	if (!unit_) {
-		return; // If the build hasn't started, don't worry about canceling it.
-	}
-	unit_->cancelConstruction();
+	unitType_ = *action->getUnitType();
 }
 
 void NolsyStructure::HandleUnstarted()
@@ -25,7 +17,7 @@ void NolsyStructure::HandleUnstarted()
 			unit_ = UnitManager::ReserveStructure(unitType_.whatBuilds().first);
 			if (unit_ && unit_->exists()) {
 				if (unit_->build(unitType_)) {
-					UnitManager::RegisterForUnitComplete(this, unitType_);
+					UnitManager::RegisterForUnitComplete(this, unit_);
 					status_ = CANCELLABLE;
 				}
 			}
@@ -57,8 +49,25 @@ void NolsyStructure::HandleUnstarted()
 	}
 
 	if (unit_->build(unitType_, *targetLocation_)) {
-		UnitManager::RegisterForUnitCreate(this, unitType_);
-		UnitManager::RegisterForUnitDestroy(this, unit_->getType());
+		UnitManager::RegisterForUnitCreate(this, unit_);
 		status_ = STOPPABLE;
 	}
+}
+
+void NolsyStructure::Cancel() {
+	if (!unit_) {
+		return; // If the build hasn't started, don't worry about canceling it.
+	}
+	unit_->cancelConstruction();
+}
+
+void NolsyStructure::Suicide() {
+	if (unit_) {
+		if (unit_->getType().isBuilding()) {
+			UnitManager::ReturnStructure(unit_);
+		} else {
+			UnitManager::ReturnWorker(unit_);
+		}
+	}
+	NolsyBase::Suicide();
 }

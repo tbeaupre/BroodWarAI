@@ -7,27 +7,30 @@ using namespace BuildActionEnums;
 
 void NolsyBase::Update() {
 	switch (status_) {
-	case CANCELLABLE:
-		HandleCancellable();
-		break;
 	case UNSTARTED:
 		HandleUnstarted();
+		break;
+	case STOPPABLE:
+		HandleStoppable();
+		break;
+	case CANCELLABLE:
+		HandleCancellable();
 		break;
 	}
 }
 
-void NolsyBase::Create() {
-	UnitManager::RegisterForUnitComplete(this, unit_->getType());
+void NolsyBase::OnCreateUnit() {
+	UnitManager::RegisterForUnitComplete(this, unit_);
 	status_ = CANCELLABLE;
 }
 
-void NolsyBase::Complete() {
+void NolsyBase::OnCompleteUnit() {
 	Suicide();
 }
 
-void NolsyBase::Destroy() {
+void NolsyBase::OnDestroyUnit() {
 	unit_ = nullptr;
-	status_ = UNSTARTED;
+	if (status_ != PAUSED) status_ = UNSTARTED;
 }
 
 void NolsyBase::SoftCancel() {
@@ -46,5 +49,6 @@ void NolsyBase::HardCancel() {
 
 void NolsyBase::Suicide() {
 	// Alright boys, pack it up.
+	unit_ = nullptr;
 	BuildManager::CompleteAction();
 }
