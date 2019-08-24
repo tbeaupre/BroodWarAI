@@ -2,6 +2,7 @@
 #include <iostream>
 #include "UnitManager.h"
 #include "Debug.h"
+#include "Banker.h"
 
 using namespace BWAPI;
 using namespace Filter;
@@ -48,6 +49,7 @@ void Clarence::onStart() {
 		{
 			UnitManager::Init();
 			BuildManager::Init();
+			Banker::Init();
 			BWAPI::Broodwar->setLocalSpeed(20);
 
 			// Retrieve you and your enemy's races. enemy() will just return the first enemy.

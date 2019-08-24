@@ -7,12 +7,12 @@ using namespace BuildActionEnums;
 
 static NolsyBase *createNolsy(BuildAction *action) {
 	NolsyBase *mike_nolan;
-	switch (action->getType) {
+	switch (action->getType()) {
 	case STRUCTURE:
 		mike_nolan = new NolsyStructure(action);
 		break;
 	case UNIT:
-		mike_nolan = new NolsyUnit(action->getUnitType);
+		mike_nolan = new NolsyUnit(action->getUnitType());
 		break;
 	case UPGRADE:
 		mike_nolan = new NolsyUpgrade(action);
@@ -21,11 +21,11 @@ static NolsyBase *createNolsy(BuildAction *action) {
 		mike_nolan = new NolsyTech(action);
 		break;
 	case OTHER:
-		mike_nolan = new NolsyOther(action->getOtherType);
+		mike_nolan = new NolsyOther(action->getOtherType());
 		break;
 	default:
-		cout << "ah fuck off cunt";
-		return;
+		BWAPI::Broodwar << "ah fuck off cunt";
+		return nullptr;
 	}
 	mike_nolan->Create();
 	return mike_nolan;

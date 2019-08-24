@@ -5,14 +5,16 @@ class Banker
 {
 
 private:
-	static Ticket *Peek();
-	static Ticket *Pop();
-	static bool Satisfiable(Ticket *toBuild, int min, int gas, int supply, int larva = 0);
-	static void FireOffAFewNolsies();
+	Ticket *Peek();
+	Ticket *Pop();
+	static bool Satisfiable(Ticket *toBuild, Bill * funds);
+	void FireOffAFewNolsies();
+	
 
 public:
-	static void Update(int min, int gas, int supply, int larva = 0);
-	static void AddTicketToQueue(Ticket *ticket, int queue);
+	void Init();
+	void Update(Bill * funds);
+	void AddTicketToQueue(Ticket *ticket);
 };
 
 

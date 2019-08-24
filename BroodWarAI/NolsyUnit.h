@@ -11,5 +11,5 @@ protected:
 	void HandleCancellable() {};
 
 private:
-	BWAPI::UnitType unitType_;
+	const BWAPI::UnitType unitType_;
 };

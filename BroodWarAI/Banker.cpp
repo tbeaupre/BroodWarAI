@@ -8,51 +8,55 @@
 #define QUEUE_COUNT 10
 
 using namespace std;
+using namespace BWAPI;
 
-static vector<queue<Ticket*>> queueArray_ = vector<queue<Ticket*>>(QUEUE_COUNT);
-// pointer to the highest priority ticket
-static Ticket *next_ = nullptr;
-// when lock == true, no resources can be spent until the current ticket is out the door. If false, lower priority tickets can be fired.
-static bool lock_ = false;
+vector<queue<Ticket*>> queueArray_;
+/* pointer to the highest priority ticket */
+Ticket *next_;
+/*	If lock == true, no resources can be spent until the current ticket is out the door. 
+	If false, lower priority tickets can be fired. */
+bool lock_;
 NolsyFactory nolsyFactory;
 
-
+void Banker::Init() {
+	lock_ = false;
+	next_ = nullptr;
+	queueArray_ = vector<queue<Ticket*>>(QUEUE_COUNT);
+}
 
 Ticket * Banker::Peek()
 {
-	for each (queue<Ticket*> queue in queueArray_)
-	{
-		if (size(queue) > 0) {
-			return queue.front();
-		}
+	int i = 0;
+	while (size(queueArray_[i]) == 0) {
+		i++;
+		if (i == QUEUE_COUNT) return nullptr; // no tickets currently filed
 	}
-	return nullptr;
+
+	return queueArray_[i].front(); // return the first ticket in the highest non-empty priority array
 }
 
 Ticket * Banker::Pop()
 {
-	int index = 0;
-	for each (queue<Ticket*> queue in queueArray_)
-	{
-		if (size(queue) > 0) {
-			Ticket *toReturn = queue.front();
-			queue.pop();
-			if (index == 0) lock_ = true;
-			return toReturn;
-		}
-		index++;
+	int i = 0;
+	while (size(queueArray_[i]) == 0) {
+		i++;
+		if (i == QUEUE_COUNT) return nullptr; // no tickets currently filed
 	}
-	return nullptr;
+	Ticket *toReturn = queueArray_[i].front();
+	queueArray_[i].pop();
+	if (i == 0) lock_ = true; // highest priority array locks
+	return toReturn; // return the first ticket in the highest non-empty priority array
 }
 
-bool Banker::Satisfiable(Ticket *toBuild, int min, int gas, int supply, int larva)
+// returns whether a bill can be satisfied by current funds. Maybe move this function out at some point?
+bool Banker::Satisfiable(Ticket *toBuild, Bill *funds)
 {
-	Bill toSatisfy = toBuild->getTotalCost();
+	Bill* toSatisfy = toBuild->getTotalCost();
 	return (
-		min >= toSatisfy.minerals &&
-		gas >= toSatisfy.gas &&
-		supply >= toSatisfy.supply &&
-		larva >= toSatisfy.larva); // its yer boy larva
+		funds->minerals >= toSatisfy->minerals &&
+		funds->gas >= toSatisfy->gas &&
+		funds->supply >= toSatisfy->supply &&
+		funds->larva >= toSatisfy->larva); // its yer boy larva
 }
 
 void Banker::FireOffAFewNolsies()
@@ -62,24 +66,21 @@ void Banker::FireOffAFewNolsies()
 	}
 }
 
-
-void Banker::Update(int min, int gas, int supply, int larva)
+void Banker::Update(Bill *funds)
 {
 	if (next_ == nullptr) {
 		next_ = Pop();
 	}
-	if (Satisfiable(next_, min, gas, supply, larva)) {
+	else if (Satisfiable(next_, funds)) {
 		FireOffAFewNolsies();
 	}
 	else {
-
+		Broodwar << "pass the doobskin mate, theres fuckin nothin left to do cunt." << std::endl;
 	}
 }
 
-void Banker::AddTicketToQueue(Ticket *ticket, int priority)
+void Banker::AddTicketToQueue(Ticket *ticket)
 {
-	if (priority >= QUEUE_COUNT) priority = QUEUE_COUNT - 1; // if the priority is super low, add it to the last available queue. 
-	queueArray_[priority].push(ticket);
+	if (ticket->getPriority() >= QUEUE_COUNT) ticket->setPriority(QUEUE_COUNT - 1); // if the priority is super low, add it to the last available queue. 
+	queueArray_[ticket->getPriority()].push(ticket);
 }
-
-

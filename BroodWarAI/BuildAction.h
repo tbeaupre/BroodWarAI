@@ -16,6 +16,7 @@ namespace BuildActionEnums {
 }
 
 class BuildAction {
+
 public:
 	BuildAction(const BWAPI::UnitType *unitType);
 	BuildAction(const BWAPI::TechType *techType);
