@@ -15,9 +15,4 @@ private:
 	static NolsyBase *nolsy_;
 
 	static void HandleAction();
-	static void HandleUnitAction();
-	static void HandleBuildingAction();
-	static void HandleTechAction();
-	static void HandleUpgradeAction();
-	static void HandleOtherAction();
 };

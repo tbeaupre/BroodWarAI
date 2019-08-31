@@ -1,6 +1,5 @@
 #include "BuildManager.h"
-#include "NolsyUnit.h"
-#include "NolsyOther.h"
+#include "NolsyFactory.h"
 
 using namespace BuildActionEnums;
 
@@ -42,87 +41,7 @@ void BuildManager::HandleAction() {
 		nolsy_->Update();
 		return;
 	}
-	switch (currentAction_->getType()) {
-		case ActionType::UNIT:
-			if (currentAction_->isBuilding()) {
-				HandleBuildingAction();
-			} else {
-				HandleUnitAction();
-			}
-			break;
-		case ActionType::TECH:
-			HandleTechAction();
-			break;
-		case ActionType::UPGRADE:
-			HandleUpgradeAction();
-			break;
-		case ActionType::OTHER:
-			HandleOtherAction();
-			break;
-	}
-}
-
-void BuildManager::HandleUnitAction() {
-	nolsy_ = new NolsyUnit(*currentAction_->getUnitType());
-}
-
-void BuildManager::HandleBuildingAction() {
-	BWAPI::UnitType toBuild = *currentAction_->getUnitType();
-	BWAPI::Unit builder = BWAPI::Broodwar->self()->getUnits().getClosestUnit(BWAPI::Filter::GetType == toBuild.whatBuilds().first &&
-		(BWAPI::Filter::IsIdle || BWAPI::Filter::IsGatheringMinerals) &&
-		BWAPI::Filter::IsOwned);
-	if (builder) {
-		if (toBuild == BWAPI::UnitTypes::Zerg_Creep_Colony) {
-			BWAPI::TilePosition targetBuildLocation = BWAPI::Broodwar->getBuildLocation(toBuild, builder->getTilePosition(), 64, true); // This is different for Creep Colonies
-			if (targetBuildLocation) {
-				if (builder->build(toBuild, targetBuildLocation)) {
-					CompleteAction(); // TODO: This should not be considered completion.
-				}
-			}
-		}
-		if (toBuild == BWAPI::UnitTypes::Zerg_Lair || toBuild == BWAPI::UnitTypes::Zerg_Hive) {
-			if (builder->build(toBuild)) {
-				CompleteAction(); // TODO: This should not be considered completion.
-			}
-		}
-		BWAPI::TilePosition targetBuildLocation = BWAPI::Broodwar->getBuildLocation(toBuild, builder->getTilePosition());
-		if (targetBuildLocation) {
-			if (builder->build(toBuild, targetBuildLocation)) {
-				CompleteAction(); // TODO: This should not be considered completion.
-			}
-		}
-	}
-}
-
-void BuildManager::HandleTechAction() {
-	BWAPI::TechType toResearch = *currentAction_->getTechType();
-	BWAPI::Unit researcher = BWAPI::Broodwar->self()->getUnits().getClosestUnit(BWAPI::Filter::GetType == toResearch.whatResearches() &&
-		BWAPI::Filter::IsIdle &&
-		BWAPI::Filter::IsOwned);
-	if (researcher) {
-		if (researcher->research(toResearch)) {
-			CompleteAction();
-		}
-	}
-}
-
-void BuildManager::HandleUpgradeAction() {
-	BWAPI::UpgradeType toUpgrade = *currentAction_->getUpgradeType();
-
-	if (BWAPI::Broodwar->self()->isUpgrading(toUpgrade)) {
-		CompleteAction();
-	}
-
-	BWAPI::Unit researcher = BWAPI::Broodwar->self()->getUnits().getClosestUnit(BWAPI::Filter::GetType == toUpgrade.whatUpgrades() &&
-		BWAPI::Filter::IsIdle &&
-		BWAPI::Filter::IsOwned);
-	if (researcher) {
-		researcher->upgrade(toUpgrade);
-	}
-}
-
-void BuildManager::HandleOtherAction() {
-	nolsy_ = new NolsyOther(currentAction_->getOtherType());
+	nolsy_ = NolsyFactory::BuildNolsy(currentAction_);
 }
 
 void BuildManager::CompleteAction() {
