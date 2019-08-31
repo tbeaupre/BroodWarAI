@@ -3,9 +3,9 @@
 
 using namespace BWAPI;
 
-NolsyStructure::NolsyStructure(const BuildAction *action)
+NolsyStructure::NolsyStructure(UnitType unitType)
 {
-	unitType_ = *action->getUnitType();
+	unitType_ = unitType;
 }
 
 void NolsyStructure::HandleUnstarted()

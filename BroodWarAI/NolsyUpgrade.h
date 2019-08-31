@@ -1,9 +1,9 @@
 #pragma once
 #include "NolsyBase.h"
 
-class NolsyUpgrade : NolsyBase {
+class NolsyUpgrade : public NolsyBase {
 public:
-	NolsyUpgrade(const BuildAction *action);
+	NolsyUpgrade(BWAPI::UpgradeType upgradeType);
 
 protected:
 	void HandleUnstarted();

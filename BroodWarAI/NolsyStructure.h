@@ -1,9 +1,9 @@
 #pragma once
 #include "NolsyBase.h"
 
-class NolsyStructure : NolsyBase {
+class NolsyStructure : public NolsyBase {
 public:
-	NolsyStructure(const BuildAction *action);
+	NolsyStructure(UnitType unitType);
 
 protected:
 	void HandleUnstarted();

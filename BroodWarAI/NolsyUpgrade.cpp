@@ -3,9 +3,9 @@
 
 using namespace BWAPI;
 
-NolsyUpgrade::NolsyUpgrade(const BuildAction *action)
+NolsyUpgrade::NolsyUpgrade(BWAPI::UpgradeType upgradeType)
 {
-	upgradeType_ = *action->getUpgradeType();
+	upgradeType_ = upgradeType;
 }
 
 void NolsyUpgrade::HandleUnstarted()
