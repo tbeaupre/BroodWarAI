@@ -164,6 +164,7 @@
     <ClInclude Include="Clarence.h" />
     <ClInclude Include="BuildCondition.h" />
     <ClInclude Include="NolsyBase.h" />
+    <ClInclude Include="NolsyFactory.h" />
     <ClInclude Include="NolsyOther.h" />
     <ClInclude Include="NolsyStructure.h" />
     <ClInclude Include="NolsyTech.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Dll.cpp" />
     <ClCompile Include="Clarence.cpp" />
     <ClCompile Include="NolsyBase.cpp" />
+    <ClCompile Include="NolsyFactory.cpp" />
     <ClCompile Include="NolsyOther.cpp" />
     <ClCompile Include="NolsyStructure.cpp" />
     <ClCompile Include="NolsyTech.cpp" />

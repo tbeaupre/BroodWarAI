@@ -1,9 +1,9 @@
 #pragma once
 #include "NolsyBase.h"
 
-class NolsyTech : NolsyBase {
+class NolsyTech : public NolsyBase {
 public:
-	NolsyTech(const BuildAction *action);
+	NolsyTech(BWAPI::TechType techType);
 
 protected:
 	void HandleUnstarted();

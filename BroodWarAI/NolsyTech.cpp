@@ -3,9 +3,9 @@
 
 using namespace BWAPI;
 
-NolsyTech::NolsyTech(const BuildAction *action)
+NolsyTech::NolsyTech(BWAPI::TechType techType)
 {
-	techType_ = *action->getTechType();
+	techType_ = techType;
 }
 
 void NolsyTech::HandleUnstarted()
