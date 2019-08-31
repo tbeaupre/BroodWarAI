@@ -4,5 +4,5 @@
 
 class NolsyFactory {
 public:
-	static NolsyBase *BuildNolsy(const BuildAction *action)
+	static NolsyBase *BuildNolsy(const BuildAction *action);
 };
