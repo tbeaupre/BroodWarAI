@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BroodWarAI", "BroodWarAI\BroodWarAI.vcxproj", "{B8AB340F-2323-47F0-881D-84FDA299D025}"
+	ProjectSection(ProjectDependencies) = postProject
+		{843656FD-9BFD-47BF-8460-7BFE9710EA2C} = {843656FD-9BFD-47BF-8460-7BFE9710EA2C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BWAPILIB", "..\..\..\BWAPI\BWAPILIB\BWAPILIB.vcxproj", "{843656FD-9BFD-47BF-8460-7BFE9710EA2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +26,17 @@ Global
 		{B8AB340F-2323-47F0-881D-84FDA299D025}.Release|x64.Build.0 = Release|Win32
 		{B8AB340F-2323-47F0-881D-84FDA299D025}.Release|x86.ActiveCfg = Release|Win32
 		{B8AB340F-2323-47F0-881D-84FDA299D025}.Release|x86.Build.0 = Release|Win32
+		{843656FD-9BFD-47BF-8460-7BFE9710EA2C}.Debug|x64.ActiveCfg = Debug|Win32
+		{843656FD-9BFD-47BF-8460-7BFE9710EA2C}.Debug|x86.ActiveCfg = Debug|Win32
+		{843656FD-9BFD-47BF-8460-7BFE9710EA2C}.Debug|x86.Build.0 = Debug|Win32
+		{843656FD-9BFD-47BF-8460-7BFE9710EA2C}.Release|x64.ActiveCfg = Release|Win32
+		{843656FD-9BFD-47BF-8460-7BFE9710EA2C}.Release|x86.ActiveCfg = Release|Win32
+		{843656FD-9BFD-47BF-8460-7BFE9710EA2C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E00BB222-D866-41CF-8A13-C2A5C30450E0}
 	EndGlobalSection
 EndGlobal
