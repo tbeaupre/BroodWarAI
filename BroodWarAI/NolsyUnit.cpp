@@ -10,15 +10,18 @@ NolsyUnit::NolsyUnit(UnitType unitType)
 
 void NolsyUnit::HandleUnstarted()
 {
-	switch (unitType_) {
-	case UnitTypes::Zerg_Devourer:
-	case UnitTypes::Zerg_Guardian:
-	case UnitTypes::Zerg_Lurker:
-		unit_ = UnitManager::ReserveUnit(unitType_.whatBuilds().first);
-		break;
-	default:
-		unit_ = UnitManager::ReserveLarva();
-		break;
+	if (!(unit_ && unit_->exists())) {
+		switch (unitType_) {
+		case UnitTypes::Zerg_Devourer:
+		case UnitTypes::Zerg_Guardian:
+		case UnitTypes::Zerg_Lurker:
+			unit_ = UnitManager::ReserveUnit(unitType_.whatBuilds().first);
+			break;
+		default:
+			BWAPI::Broodwar << "Reserving Larva" << std::endl;
+			unit_ = UnitManager::ReserveLarva();
+			break;
+		}
 	}
 
 	if (unit_ && unit_->exists()) {
