@@ -8,6 +8,7 @@
 using namespace BuildActionEnums;
 
 NolsyBase *NolsyFactory::BuildNolsy(const BuildAction *action) {
+	BWAPI::Broodwar << "Building a Nolsy: " << action->PrintAction() << std::endl;
 	switch (action->getType()) {
 		case ActionType::OTHER:
 			return new NolsyOther(action->getOtherType());
@@ -15,9 +16,9 @@ NolsyBase *NolsyFactory::BuildNolsy(const BuildAction *action) {
 			return new NolsyTech(*action->getTechType());
 		case ActionType::UNIT:
 			if (action->isBuilding()) {
-				return new NolsyUnit(*action->getUnitType());
-			} else {
 				return new NolsyStructure(*action->getUnitType());
+			} else {
+				return new NolsyUnit(*action->getUnitType());
 			}
 		case ActionType::UPGRADE:
 			return new NolsyUpgrade(*action->getUpgradeType());
