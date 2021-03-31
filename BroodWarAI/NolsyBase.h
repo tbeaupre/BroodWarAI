@@ -7,8 +7,9 @@ public:
 	void Update();
 
 	void OnCreateUnit(); // Called by UnitManager when a unit registered for create is create.
-	void OnCompleteUnit(); // Called by UnitManager when a unit registered for complete is completed.
 	void OnDestroyUnit(); // Called by UnitManager when a unit registered for destroy is destroyed.
+	void OnMorphUnit(); // Called by UnitManager when a unit registered for morph changes UnitType.
+	void OnCompleteUnit(); // Called by UnitManager when a unit registered for complete is completed.
 
 	void SoftCancel(); // Postpones an action, but does not scrap it.
 	void Resume(); // Resumes an action after it has been soft cancelled.

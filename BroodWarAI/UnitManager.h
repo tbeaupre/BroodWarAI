@@ -19,13 +19,16 @@ public:
 	static void ReturnUnit(BWAPI::Unit unit);
 
 	static void RegisterForUnitCreate(NolsyBase *nolsy, BWAPI::Unit unit);
+	static void RegisterForUnitMorph(NolsyBase* nolsy, BWAPI::Unit unit);
 	static void RegisterForUnitComplete(NolsyBase *nolsy, BWAPI::Unit unit);
 	static void UnregisterForUnitCreate(BWAPI::Unit unit);
+	static void UnregisterForUnitMorph(BWAPI::Unit unit);
 	static void UnregisterForUnitComplete(BWAPI::Unit unit);
 
-	static void CreateUnit(BWAPI::Unit unit);
-	static void CompleteUnit(BWAPI::Unit unit);
+	static void CreateUnit(BWAPI::Unit unit); // Only ever called when larva are created.
 	static void DestroyUnit(BWAPI::Unit unit);
+	static void MorphUnit(BWAPI::Unit unit);
+	static void CompleteUnit(BWAPI::Unit unit);
 
 	static size_t *GetCounts(); // DEBUG
 
@@ -37,5 +40,6 @@ private:
 	static BWAPI::Unitset *spells_;
 
 	static std::map<BWAPI::Unit, NolsyBase*> unitCreateRegistry_;
+	static std::map<BWAPI::Unit, NolsyBase*> unitMorphRegistry_;
 	static std::map<BWAPI::Unit, NolsyBase*> unitCompleteRegistry_;
 };

@@ -46,7 +46,7 @@ void NolsyOther::HandleUnstarted() {
 void NolsyOther::HandleStoppable() {
 	if (unit_->build(UnitTypes::Zerg_Hatchery, *targetLocation_)) {
 		BWAPI::Broodwar->sendText("BUILDING EXPANSION");
-		UnitManager::RegisterForUnitCreate(this, unit_);
+		UnitManager::RegisterForUnitMorph(this, unit_);
 		status_ = CANCELLABLE;
 	}
 }

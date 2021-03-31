@@ -49,7 +49,7 @@ void NolsyStructure::HandleUnstarted()
 	}
 
 	if (unit_->build(unitType_, *targetLocation_)) {
-		UnitManager::RegisterForUnitCreate(this, unit_);
+		UnitManager::RegisterForUnitMorph(this, unit_);
 		status_ = STOPPABLE;
 	}
 }

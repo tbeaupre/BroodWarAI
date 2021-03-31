@@ -24,13 +24,18 @@ void NolsyBase::OnCreateUnit() {
 	status_ = CANCELLABLE;
 }
 
-void NolsyBase::OnCompleteUnit() {
-	Suicide();
-}
-
 void NolsyBase::OnDestroyUnit() {
 	unit_ = nullptr;
 	if (status_ != PAUSED) status_ = UNSTARTED;
+}
+
+void NolsyBase::OnMorphUnit() {
+	UnitManager::RegisterForUnitComplete(this, unit_);
+	status_ = CANCELLABLE;
+}
+
+void NolsyBase::OnCompleteUnit() {
+	Suicide();
 }
 
 void NolsyBase::SoftCancel() {

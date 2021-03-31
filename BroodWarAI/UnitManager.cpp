@@ -8,6 +8,7 @@ BWAPI::Unitset *UnitManager::units_;
 BWAPI::Unitset *UnitManager::structures_;
 BWAPI::Unitset *UnitManager::spells_;
 std::map<BWAPI::Unit, NolsyBase*> UnitManager::unitCreateRegistry_;
+std::map<BWAPI::Unit, NolsyBase*> UnitManager::unitMorphRegistry_;
 std::map<BWAPI::Unit, NolsyBase*> UnitManager::unitCompleteRegistry_;
 
 void UnitManager::Init() {
@@ -76,11 +77,19 @@ void UnitManager::RegisterForUnitCreate(NolsyBase *nolsy, BWAPI::Unit unit) {
 	unitCreateRegistry_[unit] = nolsy;
 }
 
+void UnitManager::RegisterForUnitMorph(NolsyBase* nolsy, BWAPI::Unit unit) {
+	unitMorphRegistry_[unit] = nolsy;
+}
+
 void UnitManager::RegisterForUnitComplete(NolsyBase *nolsy, BWAPI::Unit unit) {
 	unitCompleteRegistry_[unit] = nolsy;
 }
 
 void UnitManager::UnregisterForUnitCreate(BWAPI::Unit unit) {
+	unitCreateRegistry_.erase(unit);
+}
+
+void UnitManager::UnregisterForUnitMorph(BWAPI::Unit unit) {
 	unitCreateRegistry_.erase(unit);
 }
 
@@ -93,6 +102,45 @@ void UnitManager::CreateUnit(BWAPI::Unit unit) {
 	if (nolsySetIter != unitCreateRegistry_.end()) {
 		(*nolsySetIter).second->OnCreateUnit();
 		UnregisterForUnitCreate(unit);
+	}
+}
+
+void UnitManager::DestroyUnit(BWAPI::Unit unit) {
+	UnitType unitType = unit->getType();
+	if (unitType.isNeutral()) return; // Ignore minerals and critters
+
+	auto nolsySetIter = unitCompleteRegistry_.find(unit);
+	if (nolsySetIter != unitCompleteRegistry_.end()) {
+		(*nolsySetIter).second->OnDestroyUnit();
+		UnregisterForUnitComplete(unit);
+	}
+	else {
+		nolsySetIter = unitCreateRegistry_.find(unit);
+		if (nolsySetIter != unitCreateRegistry_.end()) {
+			(*nolsySetIter).second->OnDestroyUnit();
+			UnregisterForUnitCreate(unit);
+		}
+	}
+
+	if (unitType == UnitTypes::Zerg_Drone) {
+		workers_->erase(unit);
+	}
+	else if (unitType.isBuilding()) {
+		structures_->erase(unit);
+	}
+	else if (unitType.isSpell()) {
+		spells_->erase(unit); // Only for dark swarms.
+	}
+	else {
+		units_->erase(unit);
+	}
+}
+
+void UnitManager::MorphUnit(BWAPI::Unit unit) {
+	auto nolsySetIter = unitMorphRegistry_.find(unit);
+	if (nolsySetIter != unitMorphRegistry_.end()) {
+		(*nolsySetIter).second->OnMorphUnit();
+		UnregisterForUnitMorph(unit);
 	}
 }
 
@@ -117,33 +165,6 @@ void UnitManager::CompleteUnit(BWAPI::Unit unit) {
 		spells_->insert(unit); // Only for dark swarms.
 	} else {
 		units_->insert(unit); // Only applicable to zerglings and scourge.
-	}
-}
-
-void UnitManager::DestroyUnit(BWAPI::Unit unit) {
-	UnitType unitType = unit->getType();
-	if (unitType.isNeutral()) return; // Ignore minerals and critters
-
-	auto nolsySetIter = unitCompleteRegistry_.find(unit);
-	if (nolsySetIter != unitCompleteRegistry_.end()) {
-		(*nolsySetIter).second->OnDestroyUnit();
-		UnregisterForUnitComplete(unit);
-	} else {
-		nolsySetIter = unitCreateRegistry_.find(unit);
-		if (nolsySetIter != unitCreateRegistry_.end()) {
-			(*nolsySetIter).second->OnDestroyUnit();
-			UnregisterForUnitCreate(unit);
-		}
-	}
-
-	if (unitType == UnitTypes::Zerg_Drone) {
-		workers_->erase(unit);
-	} else if (unitType.isBuilding()) {
-		structures_->erase(unit);
-	} else if (unitType.isSpell()) {
-		spells_->erase(unit); // Only for dark swarms.
-	} else {
-		units_->erase(unit);
 	}
 }
 
