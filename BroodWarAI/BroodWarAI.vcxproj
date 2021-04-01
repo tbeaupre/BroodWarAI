@@ -171,6 +171,7 @@
     <ClInclude Include="NolsyUnit.h" />
     <ClInclude Include="NolsyUpgrade.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="PriorityQueueManager.h" />
     <ClInclude Include="UnitManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +209,7 @@
     <ClCompile Include="NolsyTech.cpp" />
     <ClCompile Include="NolsyUnit.cpp" />
     <ClCompile Include="NolsyUpgrade.cpp" />
+    <ClCompile Include="PriorityQueueManager.cpp" />
     <ClCompile Include="UnitManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

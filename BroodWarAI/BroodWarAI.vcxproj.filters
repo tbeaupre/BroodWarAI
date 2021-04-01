@@ -135,6 +135,9 @@
     <ClCompile Include="NolsyFactory.cpp">
       <Filter>Source Files\Nolsy</Filter>
     </ClCompile>
+    <ClCompile Include="PriorityQueueManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clarence.h">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="NolsyFactory.h">
       <Filter>Header Files\Nolsy</Filter>
+    </ClInclude>
+    <ClInclude Include="PriorityQueueManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

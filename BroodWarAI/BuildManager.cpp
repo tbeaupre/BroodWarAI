@@ -14,7 +14,7 @@ void BuildManager::Init() {
 	overPool.insert(overPool.end(), h3SpireH5Hydra.begin(), h3SpireH5Hydra.end());
 
 	build_ = overPool;
-	build_ = BuildOrders::GetTest();
+	//build_ = BuildOrders::GetTest();
 }
 
 void BuildManager::OnFrame() {
