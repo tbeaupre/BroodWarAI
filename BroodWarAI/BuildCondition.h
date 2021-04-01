@@ -2,7 +2,7 @@
 #include "BWAPI.h"
 
 namespace BuildConditionEnums {
-	enum ConditionType {
+	enum class ConditionType {
 		RESOURCE,
 		UNIT,
 		TECH,
@@ -10,7 +10,7 @@ namespace BuildConditionEnums {
 		NONE
 	};
 
-	enum ResourceType {
+	enum class ResourceType {
 		MINERAL,
 		GAS,
 		SUPPLY

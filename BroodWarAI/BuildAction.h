@@ -2,14 +2,14 @@
 #include "BWAPI.h"
 
 namespace BuildActionEnums {
-	enum ActionType {
+	enum class ActionType {
 		UNIT,
 		UPGRADE,
 		TECH,
 		OTHER,
 	};
 
-	enum OtherActionType {
+	enum class OtherActionType {
 		EXPAND,
 	};
 }

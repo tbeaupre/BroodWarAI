@@ -13,7 +13,7 @@ void NolsyTech::HandleUnstarted()
 	if (BWAPI::Broodwar->self()->isResearching(techType_)) {
 		Broodwar << "Tech successfully started." << std::endl;
 		sleep_ = techType_.researchTime();
-		status_ = CANCELLABLE;
+		status_ = Status::CANCELLABLE;
 		return;
 	}
 

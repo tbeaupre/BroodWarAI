@@ -16,14 +16,14 @@ public:
 	void HardCancel(); // Tosses in the towel.
 
 protected:
-	enum Status {
+	enum class Status {
 		PAUSED, // Soft cancelled actions that may be resumed at some point.
 		UNSTARTED, // Actions that haven't been started yet, or have just been restarted.
 		STOPPABLE, // Actions in motion that don't require a cancel (eg a drone moving to expansion location).
 		CANCELLABLE // Actions in motion that require a cancel input to cancel.
 	};
 
-	Status status_ = UNSTARTED; // See above.
+	Status status_ = Status::UNSTARTED; // See above.
 	BWAPI::Unit unit_; // The worker expanding, unit being morphed, structure upgrading, etc.
 
 	virtual void HandleUnstarted() = 0; // Attempts to start the task.

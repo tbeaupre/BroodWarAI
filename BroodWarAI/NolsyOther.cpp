@@ -39,7 +39,7 @@ void NolsyOther::HandleUnstarted() {
 	// NEED TO EXPLORE LOCATION FIRST!
 	if (targetLocation_ && unit_ && unit_->canMove() && unit_->move(BWAPI::Position(*targetLocation_))) {
 		BWAPI::Broodwar->sendText("MOVING TO LOCATION");
-		status_ = STOPPABLE;
+		status_ = Status::STOPPABLE;
 	}
 }
 
@@ -47,7 +47,7 @@ void NolsyOther::HandleStoppable() {
 	if (unit_->build(UnitTypes::Zerg_Hatchery, *targetLocation_)) {
 		BWAPI::Broodwar->sendText("BUILDING EXPANSION");
 		UnitManager::RegisterForUnitMorph(this, unit_);
-		status_ = CANCELLABLE;
+		status_ = Status::CANCELLABLE;
 	}
 }
 
@@ -55,7 +55,7 @@ void NolsyOther::Cancel() {
 	if (!unit_) {
 		return;
 	}
-	if (status_ == CANCELLABLE) {
+	if (status_ == Status::CANCELLABLE) {
 		unit_->cancelConstruction();
 	}
 }

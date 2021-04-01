@@ -13,7 +13,7 @@ void NolsyUpgrade::HandleUnstarted()
 	if (Broodwar->self()->isUpgrading(upgradeType_)) {
 		Broodwar << "Upgrade successfully started." << std::endl;
 		sleep_ = upgradeType_.upgradeTime(Broodwar->self()->getUpgradeLevel(upgradeType_) + 1);
-		status_ = CANCELLABLE;
+		status_ = Status::CANCELLABLE;
 		return;
 	}
 

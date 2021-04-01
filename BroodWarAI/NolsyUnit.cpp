@@ -27,7 +27,7 @@ void NolsyUnit::HandleUnstarted()
 	if (unit_ && unit_->exists()) {
 		if (unit_->morph(unitType_)) {
 			UnitManager::RegisterForUnitComplete(this, unit_);
-			status_ = CANCELLABLE;
+			status_ = Status::CANCELLABLE;
 		}
 	}
 }

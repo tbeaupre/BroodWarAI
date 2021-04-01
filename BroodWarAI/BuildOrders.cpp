@@ -11,7 +11,7 @@ BuildOrder BuildOrders::GetTest() {
 			new BuildAction(&UnitTypes::Zerg_Drone),
 			1),
 		new BuildOrderStep(
-			new BuildAction(EXPAND))
+			new BuildAction(OtherActionType::EXPAND))
 	});
 }
 
@@ -32,7 +32,7 @@ BuildOrder BuildOrders::GetOverPool() {
 			new BuildAction(&BWAPI::UnitTypes::Zerg_Zergling),
 			3),
 		new BuildOrderStep(
-			new BuildAction(EXPAND)),
+			new BuildAction(OtherActionType::EXPAND)),
 		new BuildOrderStep(
 			new BuildCondition(&BWAPI::UnitTypes::Zerg_Hatchery, 2),
 			new BuildAction(&BWAPI::UnitTypes::Zerg_Hatchery)),

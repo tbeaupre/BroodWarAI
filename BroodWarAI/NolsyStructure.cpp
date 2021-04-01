@@ -18,7 +18,7 @@ void NolsyStructure::HandleUnstarted()
 			if (unit_ && unit_->exists()) {
 				if (unit_->build(unitType_)) {
 					UnitManager::RegisterForUnitComplete(this, unit_);
-					status_ = CANCELLABLE;
+					status_ = Status::CANCELLABLE;
 				}
 			}
 			return;
@@ -50,7 +50,7 @@ void NolsyStructure::HandleUnstarted()
 
 	if (unit_->build(unitType_, *targetLocation_)) {
 		UnitManager::RegisterForUnitMorph(this, unit_);
-		status_ = STOPPABLE;
+		status_ = Status::STOPPABLE;
 	}
 }
 

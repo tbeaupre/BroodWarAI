@@ -7,13 +7,13 @@ using namespace BuildActionEnums;
 
 void NolsyBase::Update() {
 	switch (status_) {
-	case UNSTARTED:
+	case Status::UNSTARTED:
 		HandleUnstarted();
 		break;
-	case STOPPABLE:
+	case Status::STOPPABLE:
 		HandleStoppable();
 		break;
-	case CANCELLABLE:
+	case Status::CANCELLABLE:
 		HandleCancellable();
 		break;
 	}
@@ -21,17 +21,17 @@ void NolsyBase::Update() {
 
 void NolsyBase::OnCreateUnit() {
 	UnitManager::RegisterForUnitComplete(this, unit_);
-	status_ = CANCELLABLE;
+	status_ = Status::CANCELLABLE;
 }
 
 void NolsyBase::OnDestroyUnit() {
 	unit_ = nullptr;
-	if (status_ != PAUSED) status_ = UNSTARTED;
+	if (status_ != Status::PAUSED) status_ = Status::UNSTARTED;
 }
 
 void NolsyBase::OnMorphUnit() {
 	UnitManager::RegisterForUnitComplete(this, unit_);
-	status_ = CANCELLABLE;
+	status_ = Status::CANCELLABLE;
 }
 
 void NolsyBase::OnCompleteUnit() {
@@ -40,11 +40,11 @@ void NolsyBase::OnCompleteUnit() {
 
 void NolsyBase::SoftCancel() {
 	Cancel();
-	status_ = PAUSED;
+	status_ = Status::PAUSED;
 }
 
 void NolsyBase::Resume() {
-	status_ = UNSTARTED;
+	status_ = Status::UNSTARTED;
 }
 
 void NolsyBase::HardCancel() {
