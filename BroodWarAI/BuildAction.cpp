@@ -2,24 +2,28 @@
 
 using namespace BuildActionEnums;
 
-BuildAction::BuildAction(const BWAPI::UnitType *unitType) {
+BuildAction::BuildAction(const BWAPI::UnitType *unitType, PriorityLevel priorityLevel) {
 	type_ = ActionType::UNIT;
 	unitType_ = unitType;
+	priorityLevel_ = priorityLevel;
 }
 
-BuildAction::BuildAction(const BWAPI::TechType *techType) {
+BuildAction::BuildAction(const BWAPI::TechType *techType, PriorityLevel priorityLevel) {
 	type_ = ActionType::TECH;
 	techType_ = techType;
+	priorityLevel_ = priorityLevel;
 }
 
-BuildAction::BuildAction(const BWAPI::UpgradeType *upgradeType) {
+BuildAction::BuildAction(const BWAPI::UpgradeType *upgradeType, PriorityLevel priorityLevel) {
 	type_ = ActionType::UPGRADE;
 	upgradeType_ = upgradeType;
+	priorityLevel_ = priorityLevel;
 }
 
-BuildAction::BuildAction(BuildActionEnums::OtherActionType otherType) {
+BuildAction::BuildAction(BuildActionEnums::OtherActionType otherType, PriorityLevel priorityLevel) {
 	type_ = ActionType::OTHER;
 	otherType_ = otherType;
+	priorityLevel_ = priorityLevel;
 }
 
 const std::string BuildAction::PrintAction() const {
