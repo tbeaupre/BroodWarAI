@@ -1,4 +1,4 @@
-#include "PriorityQueueManager.h";
+#include "PriorityQueueManager.h"
 
 std::priority_queue<BuildAction*, std::vector<BuildAction*>, CompareBuildActions> priorityQueue_;
 
