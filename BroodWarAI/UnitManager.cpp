@@ -2,14 +2,14 @@
 
 using namespace BWAPI;
 
-BWAPI::Unitset *UnitManager::larvae_;
-BWAPI::Unitset *UnitManager::workers_;
-BWAPI::Unitset *UnitManager::units_;
-BWAPI::Unitset *UnitManager::structures_;
-BWAPI::Unitset *UnitManager::spells_;
-std::map<BWAPI::Unit, NolsyBase*> UnitManager::unitCreateRegistry_;
-std::map<BWAPI::Unit, NolsyBase*> UnitManager::unitMorphRegistry_;
-std::map<BWAPI::Unit, NolsyBase*> UnitManager::unitCompleteRegistry_;
+Unitset *UnitManager::larvae_;
+Unitset *UnitManager::workers_;
+Unitset *UnitManager::units_;
+Unitset *UnitManager::structures_;
+Unitset *UnitManager::spells_;
+std::map<Unit, NolsyBase*> UnitManager::unitCreateRegistry_;
+std::map<Unit, NolsyBase*> UnitManager::unitMorphRegistry_;
+std::map<Unit, NolsyBase*> UnitManager::unitCompleteRegistry_;
 
 void UnitManager::Init() {
 	larvae_ = new Unitset(Unitset::none);
@@ -19,7 +19,7 @@ void UnitManager::Init() {
 	spells_ = new Unitset(Unitset::none);
 }
 
-BWAPI::Unit UnitManager::ReserveLarva() {
+Unit UnitManager::ReserveLarva() {
 	if (larvae_->empty()) {
 		return nullptr;
 	}
@@ -29,12 +29,12 @@ BWAPI::Unit UnitManager::ReserveLarva() {
 	return toReturn;
 }
 
-void UnitManager::ReturnLarva(BWAPI::Unit larva) {
+void UnitManager::ReturnLarva(Unit larva) {
 	larvae_->insert(larva);
 	UnregisterForUnitComplete(larva);
 }
 
-BWAPI::Unit UnitManager::ReserveWorker() {
+Unit UnitManager::ReserveWorker() {
 	if (workers_->empty()) return nullptr;
 
 	Unit toReturn = *workers_->begin();
@@ -42,12 +42,12 @@ BWAPI::Unit UnitManager::ReserveWorker() {
 	return toReturn;
 }
 
-void UnitManager::ReturnWorker(BWAPI::Unit worker) {
+void UnitManager::ReturnWorker(Unit worker) {
 	workers_->insert(worker);
 	UnregisterForUnitCreate(worker);
 }
 
-BWAPI::Unit UnitManager::ReserveStructure(BWAPI::UnitType structureType) {
+Unit UnitManager::ReserveStructure(UnitType structureType) {
 	if (structures_->empty()) return nullptr;
 
 	Unit toReturn = structures_->getClosestUnit(Filter::GetType == structureType);
@@ -55,12 +55,12 @@ BWAPI::Unit UnitManager::ReserveStructure(BWAPI::UnitType structureType) {
 	return toReturn;
 }
 
-void UnitManager::ReturnStructure(BWAPI::Unit structure) {
+void UnitManager::ReturnStructure(Unit structure) {
 	structures_->insert(structure);
 	UnregisterForUnitComplete(structure);
 }
 
-BWAPI::Unit UnitManager::ReserveUnit(BWAPI::UnitType unitType) {
+Unit UnitManager::ReserveUnit(UnitType unitType) {
 	if (units_->empty()) return nullptr;
 
 	Unit toReturn = units_->getClosestUnit(Filter::GetType == unitType);
@@ -68,36 +68,36 @@ BWAPI::Unit UnitManager::ReserveUnit(BWAPI::UnitType unitType) {
 	return toReturn;
 }
 
-void UnitManager::ReturnUnit(BWAPI::Unit unit) {
+void UnitManager::ReturnUnit(Unit unit) {
 	units_->insert(unit);
 	UnregisterForUnitComplete(unit);
 }
 
-void UnitManager::RegisterForUnitCreate(NolsyBase *nolsy, BWAPI::Unit unit) {
+void UnitManager::RegisterForUnitCreate(NolsyBase *nolsy, Unit unit) {
 	unitCreateRegistry_[unit] = nolsy;
 }
 
-void UnitManager::RegisterForUnitMorph(NolsyBase* nolsy, BWAPI::Unit unit) {
+void UnitManager::RegisterForUnitMorph(NolsyBase* nolsy, Unit unit) {
 	unitMorphRegistry_[unit] = nolsy;
 }
 
-void UnitManager::RegisterForUnitComplete(NolsyBase *nolsy, BWAPI::Unit unit) {
+void UnitManager::RegisterForUnitComplete(NolsyBase *nolsy, Unit unit) {
 	unitCompleteRegistry_[unit] = nolsy;
 }
 
-void UnitManager::UnregisterForUnitCreate(BWAPI::Unit unit) {
+void UnitManager::UnregisterForUnitCreate(Unit unit) {
 	unitCreateRegistry_.erase(unit);
 }
 
-void UnitManager::UnregisterForUnitMorph(BWAPI::Unit unit) {
+void UnitManager::UnregisterForUnitMorph(Unit unit) {
 	unitCreateRegistry_.erase(unit);
 }
 
-void UnitManager::UnregisterForUnitComplete(BWAPI::Unit unit) {
+void UnitManager::UnregisterForUnitComplete(Unit unit) {
 	unitCompleteRegistry_.erase(unit);
 }
 
-void UnitManager::CreateUnit(BWAPI::Unit unit) {
+void UnitManager::CreateUnit(Unit unit) {
 	auto nolsySetIter = unitCreateRegistry_.find(unit);
 	if (nolsySetIter != unitCreateRegistry_.end()) {
 		(*nolsySetIter).second->OnCreateUnit();
@@ -105,7 +105,7 @@ void UnitManager::CreateUnit(BWAPI::Unit unit) {
 	}
 }
 
-void UnitManager::DestroyUnit(BWAPI::Unit unit) {
+void UnitManager::DestroyUnit(Unit unit) {
 	UnitType unitType = unit->getType();
 	if (unitType.isNeutral()) return; // Ignore minerals and critters
 
@@ -136,7 +136,7 @@ void UnitManager::DestroyUnit(BWAPI::Unit unit) {
 	}
 }
 
-void UnitManager::MorphUnit(BWAPI::Unit unit) {
+void UnitManager::MorphUnit(Unit unit) {
 	auto nolsySetIter = unitMorphRegistry_.find(unit);
 	if (nolsySetIter != unitMorphRegistry_.end()) {
 		(*nolsySetIter).second->OnMorphUnit();
@@ -144,9 +144,9 @@ void UnitManager::MorphUnit(BWAPI::Unit unit) {
 	}
 }
 
-void UnitManager::CompleteUnit(BWAPI::Unit unit) {
+void UnitManager::CompleteUnit(Unit unit) {
 	UnitType unitType = unit->getType();
-	BWAPI::Broodwar->drawTextScreen(50, 40, "Unit Complete: %s", unitType.c_str());
+	Broodwar->drawTextScreen(50, 40, "Unit Complete: %s", unitType.c_str());
 	if (unitType.isNeutral()) return; // Ignore minerals and critters
 
 	auto nolsySetIter = unitCompleteRegistry_.find(unit);
@@ -166,6 +166,26 @@ void UnitManager::CompleteUnit(BWAPI::Unit unit) {
 	} else {
 		units_->insert(unit); // Only applicable to zerglings and scourge.
 	}
+}
+
+bool UnitManager::UnitOfTypeExists(const UnitType *unitType) {
+	for (auto unit : *units_) {
+		if (unit->getType() == *unitType) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool UnitManager::StructureOfTypeExists(const UnitType* unitType) {
+	for (auto structure : *structures_) {
+		if (structure->getType() == *unitType) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 size_t *UnitManager::GetCounts() {
